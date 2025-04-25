@@ -45,7 +45,7 @@ class AuthService
         $key = isset($request['phone']) ? 'phone' : 'email';
 
         $parameters = [
-            'select'    => ['id','name','phone','type', 'password'],
+            'select'    => ['id','name','phone','type', 'password', 'email_verified_at'],
             'where'     => [$key, '=', $request[$key]],
         ];
 
@@ -53,6 +53,10 @@ class AuthService
 
         if (!$user) {
             return ['error' => 'wrong phone or email'];
+        }
+
+        if ($user->email_verified_at == null) {
+            return ['error' => 'you must verify your email'];
         }
 
         if (!Hash::check($request['password'], $user->password)) {
