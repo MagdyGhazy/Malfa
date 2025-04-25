@@ -4,14 +4,17 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Http\Enums\UserTypeEnum;
+use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, AttachmentTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -60,5 +63,42 @@ class User extends Authenticatable
     public function getTypeDescriptionAttribute()
     {
         return $this->type ? UserTypeEnum::getDescription($this->type) : null;
+    }
+
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
+
+    public function assignRole($roleId)
+    {
+        $this->roles()->sync([$roleId]);
+    }
+
+    public function getPermissions()
+    {
+        $permissions = [];
+
+        foreach ($this->roles as $role) {
+            foreach ($role->permissions as $permission) {
+                $permissions[] = $permission->name;
+            }
+        }
+
+        return array_unique($permissions);
+    }
+
+
+    public function hasPermissionTo($permissionName)
+    {
+        $permissions = $this->getPermissions();
+
+        return in_array($permissionName, $permissions);
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->morphMany(\App\Models\Media::class, 'model');
     }
 }

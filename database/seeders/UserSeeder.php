@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+
 use App\Http\Enums\UserTypeEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -50,9 +52,9 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-//        $admin->assignRole(1);
-//        $partner->assignRole(2);
-//        $visitor->assignRole(3);
-//        $guest->assignRole(4);
+        $admin->assignRole(1);
+        $partner->assignRole(2);
+        $visitor->assignRole(3);
+        $guest->assignRole(4);
     }
 }

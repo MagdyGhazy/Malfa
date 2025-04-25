@@ -94,16 +94,16 @@ class MakeModuleCommand extends Command
 
 
 
-              /** ===========| {$name} |============================| {$date} |================= **/
-              Route::group(['prefix' => '{$small_name}', 'middleware' => 'auth:sanctum'], function () {
-                  Route::controller(\\App\\Http\\Controllers\\Api\\{$name}\\{$controller_name}::class)->group(function () {
-                      Route::get('/', 'index')->middleware('permission:list {$small_name}s');
-                      Route::get('/{id}', 'show')->middleware('permission:show {$small_name}s');
-                      Route::post('/', 'store')->middleware('permission:create {$small_name}s');
-                      Route::put('/{id}', 'update')->middleware('permission:edit {$small_name}s');
-                      Route::delete('/{id}', 'destroy')->middleware('permission:delete {$small_name}s');
-                  });
-              });
+             /** ===========| {$name} |============================| {$date} |================= **/
+             Route::group(['prefix' => '{$small_name}', 'middleware' => 'auth:sanctum'], function () {
+                 Route::controller(\\App\\Http\\Controllers\\Api\\{$name}\\{$controller_name}::class)->group(function () {
+                     Route::get('/', 'index')->middleware('permission:list {$small_name}s');
+                     Route::get('/{id}', 'show')->middleware('permission:show {$small_name}s');
+                     Route::post('/', 'store')->middleware('permission:create {$small_name}s');
+                     Route::put('/{id}', 'update')->middleware('permission:edit {$small_name}s');
+                     Route::delete('/{id}', 'destroy')->middleware('permission:delete {$small_name}s');
+                 });
+             });
         ROUTE;
 
 
