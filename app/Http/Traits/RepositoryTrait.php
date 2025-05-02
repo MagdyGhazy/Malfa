@@ -7,12 +7,24 @@ trait RepositoryTrait
     private function buildQuery($query, $parameters = [])
     {
         try {
-            $query->when($parameters['select'] ?? null, fn($query, $select) => $query->select($select))
-                ->when($parameters['relations'] ?? null, fn($query, $relations) => $query->with($relations))
-                ->when($parameters['where'] ?? null, fn($query) => $query->where(...$parameters['where']))
-                ->when($parameters['where2'] ?? null, fn($query) => $query->where(...$parameters['where2']))
-                ->when($parameters['where3'] ?? null, fn($query) => $query->where(...$parameters['where3']))
-                ->orderBy('updated_at', 'desc');
+
+            $query->when(!empty($parameters['select']), function ($query) use ($parameters) {
+                $query->select($parameters['select']);
+            });
+
+            $query->when(!empty($parameters['relations']), function ($query) use ($parameters) {
+                $query->with($parameters['relations']);
+            });
+
+            $query->when(!empty($parameters['where']) && is_array($parameters['where']), function ($query) use ($parameters) {
+                foreach ($parameters['where'] as $condition) {
+                    if (is_array($condition) && count($condition) >= 2) {
+                        $query->where(...$condition);
+                    }
+                }
+            });
+
+            $query->orderBy('created_at', 'desc');
 
             return $query;
         } catch (\Throwable $e) {
@@ -20,37 +32,25 @@ trait RepositoryTrait
         }
     }
 
-    public function query($model, $parameters = [])
+    public function query($model, array $parameters = [])
     {
-        try {
-            return $this->buildQuery($model->query(), $parameters);
-        } catch (\Throwable $e) {
-            return ['error' => $e->getMessage()];
-        }
+        return $this->buildQuery($model->newQuery(), $parameters);
     }
 
     public function getAll($model, $parameters = [])
     {
-        try {
-            return $this->buildQuery($model->query(), $parameters)->get();
-        } catch (\Throwable $e) {
-            return ['error' => $e->getMessage()];
-        }
+        return $this->buildQuery($model->query(), $parameters)->get();
     }
 
     public function getOne($model, $id, $parameters = [])
     {
-        try {
-            $data = $model->find($id);
+        $data = $model->find($id);
 
-            if ($data) {
-                return $this->buildQuery($model->query(), $parameters)->find($id);
-            }
-
-            return $data ?? ['error' => 'Data not exists'];
-        } catch (\Throwable $e) {
-            return ['error' => $e->getMessage()];
+        if ($data) {
+            return $this->buildQuery($model->query(), $parameters)->find($id);
         }
+
+        return $data ?? ['error' => 'Data not exists'];
 
     }
 
