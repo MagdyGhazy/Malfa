@@ -23,7 +23,7 @@ class AddressService
         $perPage = request()->get('limit', 10);
 
         $parameters = [
-            'select'    => ['id','address_line_en','address_line_ar','zip_code','lat','long'],
+            'select'    => ['id','address_line_en','address_line_ar','zip_code','lat','long','country_id','city_id'],
             'relations' => ['country:id,name_en,name_ar,iso_code','city:id,name_en,name_ar'],
         ];
 
@@ -39,7 +39,7 @@ class AddressService
     public function show(int $id)
     {
         $parameters = [
-            'select'    => ['id','address_line_en','address_line_ar','zip_code','lat','long'],
+            'select'    => ['id','address_line_en','address_line_ar','zip_code','lat','long','country_id','city_id'],
             'relations' => ['country:id,name_en,name_ar,iso_code','city:id,name_en,name_ar'],
         ];
 

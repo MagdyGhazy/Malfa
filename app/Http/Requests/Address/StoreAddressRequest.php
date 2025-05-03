@@ -22,6 +22,8 @@ class StoreAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'model_type'       => 'required', 'string',
+            'model_id'         => 'required', 'integer',
             'address_line_en' => 'nullable|string|max:255',
             'address_line_ar' => 'nullable|string|max:255',
             'zip_code' => 'nullable|string|max:20',

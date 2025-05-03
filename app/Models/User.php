@@ -101,4 +101,8 @@ class User extends Authenticatable
     {
         return $this->morphMany(\App\Models\Media::class, 'model');
     }
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'model');
+    }
 }
