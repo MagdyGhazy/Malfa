@@ -14,4 +14,5 @@ return [
     'permissions'   => 'permissions',
     'users'         => 'users',
     'roles'         => 'roles',
+    'features'      => 'features',
 ];

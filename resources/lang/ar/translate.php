@@ -15,6 +15,7 @@ return [
     'permissions'   => 'الصلاحيات',
     'users'         => 'المستخدمين',
     'roles'         => 'الادوار',
+    'features'      => 'الخصائص',
 ];
 
 
