@@ -47,3 +47,16 @@ use Illuminate\Support\Facades\Route;
              Route::delete('/{id}', 'destroy')->middleware('permission:delete users');
          });
      });
+
+
+
+     /** ===========| Address |============================| 2025-05-03 |================= **/
+     Route::group(['prefix' => 'address', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\Address\AddressController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list addresses');
+             Route::get('/{id}', 'show')->middleware('permission:show addresses');
+             Route::post('/', 'store')->middleware('permission:create addresses');
+             Route::put('/{id}', 'update')->middleware('permission:edit addresses');
+             Route::delete('/{id}', 'destroy')->middleware('permission:delete addresses');
+         });
+     });
