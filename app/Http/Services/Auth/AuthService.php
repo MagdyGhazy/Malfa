@@ -46,10 +46,11 @@ class AuthService
 
         $parameters = [
             'select'    => ['id','name','phone','type', 'password', 'email_verified_at'],
-            'where'     => [$key, '=', $request[$key]],
+            'where'     => [[$key, '=', $request[$key]]],
         ];
 
         $user = $this->query($this->model, $parameters)->first();
+
 
         if (!$user) {
             return ['error' => 'wrong phone or email'];
