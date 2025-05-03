@@ -60,3 +60,13 @@ use Illuminate\Support\Facades\Route;
              Route::delete('/{id}', 'destroy')->middleware('permission:delete addresses');
          });
      });
+
+
+
+     /** ===========| Country |============================| 2025-05-03 |================= **/
+     Route::group(['prefix' => 'country', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\Country\CountryController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list countries');
+             Route::get('/{id}', 'show')->middleware('permission:show countries');
+         });
+     });
