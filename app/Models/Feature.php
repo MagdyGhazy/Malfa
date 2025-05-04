@@ -8,30 +8,47 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feature extends Model
 {
-    use HasFactory;
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'name_en',
+        'name_ar',
+        'type'
+    ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'model_id' => 'integer',
+        'type' => 'array',
     ];
 
     /**
-     * @var string[]
+     * @param $query
+     * @param $modelType
+     * @return mixed
      */
-    protected $fillable = [
-        'model_id',
-        'model_type',
-        'name_en',
-        'name_ar'
-    ];
-
-    /**
-     * @return MorphTo
-     */
-    public function model(): MorphTo
+    public function scopeForModel($query, $modelType)
     {
-        return $this->morphTo();
+        return $query->whereJsonContains('type', $modelType);
     }
+
+//    /**
+//     * @param $value
+//     * @return mixed
+//     */
+//    public function getTypeAttribute($value)
+//    {
+//        return json_decode($value, true);
+//    }
+//
+//    /**
+//     * @param $value
+//     * @return void
+//     */
+//    public function setTypeAttribute($value)
+//    {
+//        $this->attributes['type'] = json_encode($value);
+//    }
 }

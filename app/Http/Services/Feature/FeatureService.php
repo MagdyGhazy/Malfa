@@ -23,7 +23,7 @@ class FeatureService
         $perPage = request()->get('limit', 10);
 
         $parameters = [
-            'select' => ['id', 'name_en', 'name_ar', 'model_id', 'model_type'],
+            'select' => ['id', 'name_en', 'name_ar', 'type'],
 //            'relations' => [],
 //            'where' => [
 //                 ['status', '=', 'active'],
@@ -42,7 +42,7 @@ class FeatureService
     public function show(int $id)
     {
         $parameters = [
-            'select' => ['id', 'name_en', 'name_ar', 'model_id', 'model_type'],
+            'select' => ['id', 'name_en', 'name_ar', 'type'],
 //            'relations' => [],
 //            'where' => [
 //                 ['status', '=', 'active'],
@@ -72,8 +72,6 @@ class FeatureService
         return $query->where(function (Builder $q) use ($search) {
             $q->where('name_en', 'LIKE', "%{$search}%");
             $q->orWhere('name_ar', 'LIKE', "%{$search}%");
-            $q->orWhere('model_id', 'LIKE', "%{$search}%");
-            $q->orWhere('model_type', 'LIKE', "%{$search}%");
         });
     }
 }

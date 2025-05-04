@@ -15,18 +15,25 @@ class FeatureSeeder extends Seeder
     public function run(): void
     {
         $features = [
-            ['name_en' => 'Color', 'name_ar' => 'اللون'],
-            ['name_en' => 'Size', 'name_ar' => 'الحجم'],
-            ['name_en' => 'Material', 'name_ar' => 'الخامة'],
+            [
+                'name_en' => 'Color',
+                'name_ar' => 'اللون',
+                'type'    => ['red', 'blue', 'green'],
+            ],
+            [
+                'name_en' => 'Size',
+                'name_ar' => 'الحجم',
+                'type'    => ['S', 'M', 'L', 'XL'],
+            ],
+            [
+                'name_en' => 'Material',
+                'name_ar' => 'الخامة',
+                'type'    => ['cotton', 'polyester', 'leather'],
+            ],
         ];
 
-        foreach ($features as $i => $feature) {
-            Feature::create([
-                'name_en'     => $feature['name_en'],
-                'name_ar'     => $feature['name_ar'],
-                'model_type'  => 'App\Models\Feature',
-                'model_id'    => 1,
-            ]);
+        foreach ($features as $feature) {
+            Feature::create($feature);
         }
     }
 }

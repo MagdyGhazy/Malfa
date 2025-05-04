@@ -22,10 +22,9 @@ class StoreFeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model_id'   => 'required|integer',
-            'model_type' => 'required|string',
-            'name_en'    => 'required|string|max:255',
-            'name_ar'    => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'type'    => 'required|array',
         ];
     }
 }
