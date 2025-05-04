@@ -8,7 +8,6 @@ use App\Http\Requests\Country\UpdateCountryRequest;
 use App\Http\Services\Country\CountryService;
 use App\Http\Traits\ResponseTrait;
 
-
 class CountryController extends Controller
 {
     use ResponseTrait;
@@ -20,6 +19,7 @@ class CountryController extends Controller
     {
         $this->service = $service;
         $this->key = 'Country';
+        $this->Secondkey = 'State';
     }
 
 
@@ -29,31 +29,15 @@ class CountryController extends Controller
         return !isset($data['error']) ? $this->success($data, 200, 'All ' . $this->key . 's') : $this->error(null, 404, 'Cannot fetch ' . $this->key . 's', $data['error']);
     }
 
-
     public function show($id)
     {
         $data = $this->service->show($id);
         return !isset($data['error']) ? $this->success($data, 200, $this->key . ' details') : $this->error(null, 404, 'Cannot fetch ' . $this->key, $data['error']);
     }
-
-
-    public function store(StoreCountryRequest $request)
+    public  function getCities($id)
     {
-        $data = $this->service->store($request->validated());
-        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' created successfully') : $this->error(null, 404, 'Cannot create ' . $this->key, $data['error']);
+        $data =$this->service->getCities($id);
+        return !isset($data['error']) ? $this->success($data, 200, $this->Secondkey . ' details') : $this->error(null, 404, 'Cannot fetch ' . $this->Secondkey, $data['error']);
     }
 
-
-    public function update(UpdateCountryRequest $request, $id)
-    {
-       $data = $this->service->update($request->validated(), $id);
-        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' updated successfully') : $this->error(null, 404, 'Cannot update ' . $this->key, $data['error']);
-    }
-
-
-    public function destroy($id)
-    {
-        $data = $this->service->destroy($id);
-        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' deleted successfully') : $this->error(null, 404, 'Cannot delete ' . $this->key, $data['error']);
-    }
 }

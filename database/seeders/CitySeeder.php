@@ -31,14 +31,14 @@ class CitySeeder extends Seeder
 
         $counter = 0;
         foreach ($citiesRaw as $city) {
-            if (!isset($city['name']) || !isset($city['country_id']) || !$city['name'] || !$city['country_id']) {
+            if (!isset($city['name']) || !isset($city['country_id']) || !$city['name'] || !$city['country_id'] ||  !$city['state_id']) {
                 continue;
             }
 
             $batch[] = [
                 'country_id' => $city['country_id'],
-                'name_en' => $city['name'],
-                'name_ar' => $city['name'],
+                'state_id' => $city['state_id'],
+                'name' => $city['name'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

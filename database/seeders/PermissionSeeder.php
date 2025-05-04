@@ -18,9 +18,8 @@ class PermissionSeeder extends Seeder
             'permissions'        => ['list', 'edit'],
             'users'              => ['list', 'show', 'create', 'edit', 'delete'],
             'roles'              => ['list', 'show', 'create', 'edit', 'delete'],
-            'addresses'           => ['list', 'show', 'create', 'edit', 'delete'],
-
-            'countries' => ['list', 'show'],
+            'addresses'          => ['list', 'show', 'create', 'edit', 'delete'],
+            'countries'          => ['list', 'show'],
         ];
 
         foreach ($permissions as $module => $actions) {

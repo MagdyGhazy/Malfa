@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('address_line_en')->nullable();
             $table->string('address_line_ar')->nullable();
             $table->foreignId('city_id')->nullable()->constrained('cities')->cascadeOnDelete();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('long', 11, 8)->nullable();
             $table->string('zip_code')->nullable();

@@ -24,8 +24,8 @@ class CountrySeeder extends Seeder
 
         foreach ($countriesRaw as $country) {
             $countries[] = [
-                'name_en' => $country['name'],
-                'name_ar' => $country['native'] ?? $country['name'],
+                'name' => $country['name'],
+                'native' => $country['native'] ?? $country['name'],
                 'iso_code' => $country['iso2'],
                 'created_at' => now(),
                 'updated_at' => now(),
