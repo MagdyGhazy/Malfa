@@ -15,6 +15,18 @@ return [
     'permissions'   => 'الصلاحيات',
     'users'         => 'المستخدمين',
     'roles'         => 'الادوار',
+    'features'      => 'الخصائص',
+    'hotel'         => 'فندق',
+    'house'         => 'منزل',
+    'apartment'     => 'شقه',
+    'landings'      => 'صفحات الهبوط',
+    'cities'        => 'المدن',
+    'states'        => 'المحافظات',
+    'countries'     => 'الدول',
+    'addresses'     => 'العناوين',
+    'units'         => 'الوحدات',
+    'active'        => 'نشط',
+    'inactive'      => 'غير نشط',
 ];
 
 
