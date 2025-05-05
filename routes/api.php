@@ -71,3 +71,13 @@ use Illuminate\Support\Facades\Route;
              Route::get('/state/{id}', 'getCities')->middleware('permission:show countries');
          });
      });
+     /** ===========| Unit |============================| 2025-05-04 |================= **/
+     Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\Unit\UnitController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list units');
+             Route::get('/{id}', 'show')->middleware('permission:show units');
+             Route::post('/', 'store')->middleware('permission:create units');
+             Route::put('/{id}', 'update')->middleware('permission:edit units');
+             Route::delete('/{id}', 'destroy')->middleware('permission:delete units');
+         });
+     });

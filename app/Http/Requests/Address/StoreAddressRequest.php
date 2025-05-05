@@ -30,7 +30,6 @@ class StoreAddressRequest extends FormRequest
             'lat' => 'required|numeric|between:-90,90',
             'long' => 'required|numeric|between:-180,180',
             'city_id' => 'required|exists:cities,id',
-            'country_id' => 'required|exists:countries,id',
         ];
     }
 }

@@ -14,4 +14,16 @@ return [
     'permissions'   => 'permissions',
     'users'         => 'users',
     'roles'         => 'roles',
+    'hotel'         => 'hotel',
+    'house'         => 'house',
+    'apartment'     => 'apartment',
+    'landings'      => 'landings',
+    'cities'        => 'cities',
+    'states'        => 'states',
+    'countries'     => 'countries',
+    'addresses'     => 'addresses',
+    'units'         => 'units',
+    'active'        => 'active',
+    'inactive'      => 'inactive',
+
 ];

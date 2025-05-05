@@ -30,7 +30,6 @@ class UpdateAddressRequest extends FormRequest
             'lat' => 'nullable|numeric|between:-90,90',
             'long' => 'nullable|numeric|between:-180,180',
             'city_id' => 'nullable|exists:cities,id',
-            'country_id' => 'nullable|exists:countries,id',
         ];
     }
 }
