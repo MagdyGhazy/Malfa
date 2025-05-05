@@ -4,16 +4,16 @@ namespace App\Http\Enums;
 
 enum StatusEnum:int
 {
-    case INACTIVE    = 0;
+    case INACTIVE    = 1;
 
-    case ACTIVE      = 1;
+    case ACTIVE      = 2;
 
 
     public static function getDescription(int $value): string
     {
         return match ($value) {
-            1       => __('translate.active'),
-            0       => __('translate.inactive'),
+            1       => __('translate.inactive'),
+            2       => __('translate.active'),
             default => __('translate.unknown'),
         };
     }

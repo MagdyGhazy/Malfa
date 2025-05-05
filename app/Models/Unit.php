@@ -4,12 +4,14 @@ namespace App\Models;
 
 use App\Http\Enums\StatusEnum;
 use App\Http\Enums\UnitTypeEnum;
+use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Unit extends Model
 {
-    use HasFactory;
+    use HasFactory,AttachmentTrait;
 
     protected $fillable = [
         'user_id',
@@ -24,13 +26,22 @@ class Unit extends Model
     protected $casts = [
         'available_rooms' => 'array',
     ];
-    protected $appends = ['status_description', 'type_description'];
-
-
-    public function user()
+    protected $appends = ['status_description', 'type_description','translated_description'];
+    public function getTranslatedDescriptionAttribute(): string
     {
-        return $this->belongsTo(User::class);
+        return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
     }
+
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            $model->deleteMedia($model);
+            if ($model->address){
+                $model->address()->delete();
+            }
+        });
+    }
+
     public function getTypeDescriptionAttribute()
     {
         return UnitTypeEnum::getDescription($this->type);
@@ -38,6 +49,12 @@ class Unit extends Model
     public function getStatusDescriptionAttribute()
     {
         return $this->status !== null ? StatusEnum::getDescription($this->status) : __('translate.unknown');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function address()

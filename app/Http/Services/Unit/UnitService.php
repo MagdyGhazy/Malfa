@@ -27,10 +27,7 @@ class UnitService
 
         $parameters = [
             'select' => ['id', 'name', 'description_en', 'description_ar', 'status', 'type', 'rating', 'available_rooms', 'user_id'],
-            'relations' => ['user:id,name', 'address', 'media:id,name,path,model_id,model_type'],
-            'where' => [
-                ['status', '=', '1'],
-            ]
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type'],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -46,10 +43,7 @@ class UnitService
     {
         $parameters = [
             'select' => ['id', 'name', 'description_en', 'description_ar', 'type', 'rating', 'available_rooms', 'user_id', 'status'],
-            'relations' => ['user:id,name', 'address', 'media:id,name,path,model_id,model_type'],
-            'where' => [
-                ['status', '=', '1'],
-            ]
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type'],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
@@ -60,15 +54,9 @@ class UnitService
         $addressData = $request['address'] ?? null;
         unset($request['address']);
         $unit = $this->create($this->model, $request);
-
-        if ($unit && $addressData) {
-            $addressData['model_id'] = $unit->id;
-            $addressData['model_type'] = get_class($this->model);
-            $this->addressService->store($addressData);
-        }
-
+        $unit->address()->create($addressData);
         if (isset($request['images'])) {
-            $this->addGroupMedia($unit, $request['images'], 'units', 'unit_images');
+            $this->addGroupMedia($unit, $request['images'], 'units', 'unit_image');
         }
 
         return $unit;
@@ -76,35 +64,20 @@ class UnitService
 
     public function update(array $request, int $id)
     {
-        $data = $this->model->findOrFail($id);
+        $data = $this->edit($this->model, $request, $id);
         if (isset($request['address'])) {
             $addressData = $request['address'];
-            $this->addressService->update($addressData, $data->address->id);
+            $data->address()->update($addressData);
         }
 
         if (isset($request['images'])) {
-            $media = $data->media()->where('name', 'unit_images')->first();
-            if ($media) {
-                $this->updateGroupMedia($data, $request['images'], 'units', 'unit_images');
-            } else {
-                $this->addMedia($data, $request['images'], 'units', 'unit_images');
-            }
+            $this->updateGroupMedia($data, $request['images'], 'units', 'unit_image');
         }
-        return $this->edit($data, $request, $id);
+        return $data;
     }
 
     public function destroy(int $id)
     {
-
-        $data = $this->model->find($id);
-        if ($data->address) {
-            $this->addressService->destroy($data->address->id);
-        }
-        if ($data->media) {
-            foreach ($data->media as $media) {
-                $media->delete();
-            }
-        }
         return $this->delete($this->model, $id);
 
     }
@@ -115,7 +88,6 @@ class UnitService
             $q->where('description_en', 'LIKE', "%{$search}%");
             $q->orWhere('description_ar', 'LIKE', "%{$search}%");
             $q->orWhere('rating', 'LIKE', "%{$search}%");
-            $q->orWhere('type', 'LIKE', "%{$search}%");
             $q->orWhere('name', 'LIKE', "%{$search}%");
         });
     }
