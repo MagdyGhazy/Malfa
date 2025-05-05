@@ -69,15 +69,19 @@ use Illuminate\Support\Facades\Route;
              Route::get('/', 'index')->middleware('permission:list countries');
              Route::get('/{id}', 'show')->middleware('permission:show countries');
              Route::get('/state/{id}', 'getCities')->middleware('permission:show countries');
-
-
-     /** ===========| Feature |============================| 2025-05-03 |================= **/
-     Route::group(['prefix' => 'feature', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\Feature\FeatureController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list features');
-             Route::get('/{id}', 'show')->middleware('permission:show features');
-             Route::post('/', 'store')->middleware('permission:create features');
-             Route::put('/{id}', 'update')->middleware('permission:edit features');
-             Route::delete('/{id}', 'destroy')->middleware('permission:delete features');
          });
      });
+
+
+
+    /** ===========| Feature |============================| 2025-05-03 |================= **/
+    Route::group(['prefix' => 'feature', 'middleware' => 'auth:sanctum'], function () {
+        Route::controller(\App\Http\Controllers\Api\Feature\FeatureController::class)->group(function () {
+            Route::get('/', 'index')->middleware('permission:list features');
+            Route::get('/{id}', 'show')->middleware('permission:show features');
+            Route::post('/', 'store')->middleware('permission:create features');
+            Route::put('/{id}', 'update')->middleware('permission:edit features');
+            Route::delete('/{id}', 'destroy')->middleware('permission:delete features');
+        });
+    });
+
