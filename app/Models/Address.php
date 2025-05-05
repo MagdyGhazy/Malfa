@@ -15,7 +15,6 @@ class Address extends Model
         'address_line_en',
         'address_line_ar',
         'city_id',
-        'country_id',
         'lat',
         'long',
         'zip_code',
@@ -33,9 +32,6 @@ class Address extends Model
     }
 
 
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
+
 
 }

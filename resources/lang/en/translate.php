@@ -15,4 +15,16 @@ return [
     'users'         => 'users',
     'roles'         => 'roles',
     'features'      => 'features',
+    'hotel'         => 'hotel',
+    'house'         => 'house',
+    'apartment'     => 'apartment',
+    'landings'      => 'landings',
+    'cities'        => 'cities',
+    'states'        => 'states',
+    'countries'     => 'countries',
+    'addresses'     => 'addresses',
+    'units'         => 'units',
+    'active'        => 'active',
+    'inactive'      => 'inactive',
+
 ];

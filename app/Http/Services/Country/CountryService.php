@@ -23,7 +23,7 @@ class CountryService
     {
         $search  = request()->get('search');
         $parameters = [
-            'select'    => ['id','name_en','name_ar','iso_code'],
+            'select'    => ['id','name','native','iso_code'],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -32,7 +32,7 @@ class CountryService
             $query = $this->filter($query, $search);
         }
 
-        return $query;
+        return $query->get();
     }
 
     public function show(int $id)

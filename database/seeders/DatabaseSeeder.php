@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AddressSeeder::class);
         $this->call(FeatureSeeder::class);
         $this->call(LandingSeeder::class);
-
+        $this->call(UnitSeeder::class);
     }
 }
