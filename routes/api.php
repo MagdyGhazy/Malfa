@@ -101,8 +101,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
         Route::controller(\App\Http\Controllers\Api\Landing\LandingController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{id}', 'show');
-
         });
     });
-    >>>>
 
