@@ -112,6 +112,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
              Route::post('/', 'store')->middleware('permission:create units');
              Route::put('/{id}', 'update')->middleware('permission:edit units');
              Route::delete('/{id}', 'destroy')->middleware('permission:delete units');
+             Route::post('/is_active/{id}','toggleStatus')->middleware('permission:edit units');
+
          });
      });
 
@@ -125,5 +127,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
              Route::post('/', 'store')->middleware('permission:create rooms');
              Route::put('/{id}', 'update')->middleware('permission:edit rooms');
              Route::delete('/{id}', 'destroy')->middleware('permission:delete rooms');
+             Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
          });
      });

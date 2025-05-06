@@ -57,4 +57,9 @@ class UnitController extends Controller
         $data = $this->service->destroy($id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' deleted successfully') : $this->error(null, 404, 'Cannot delete ' . $this->key, $data['error']);
     }
+    public function toggleStatus($id)
+    {
+        $data = $this->service->toggleStatus($id);
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Status Changed successfully') : $this->error(null, 404, 'Cannot Change Status ' . $this->key, $data['error']);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Unit;
 
+use App\Http\Enums\StatusEnum;
 use App\Http\Services\Address\AddressService;
 use App\Http\Traits\AttachmentTrait;
 use App\Http\Traits\RepositoryTrait;
@@ -91,4 +92,20 @@ class UnitService
             $q->orWhere('name', 'LIKE', "%{$search}%");
         });
     }
+
+    public  function toggleStatus(int $id)
+    {
+        $parameters = [
+            'select'    => ['id','status'],
+            'where'     => [
+                ['id', '=', $id],
+            ]
+        ];
+        $data = $this->query($this->model, $parameters)->first();
+        $newStatus = $data->status == StatusEnum::ACTIVE->value
+            ? StatusEnum::INACTIVE->value
+            : StatusEnum::ACTIVE->value;
+        return $this->edit($this->model,['status' => $newStatus], $id);
+    }
+
 }

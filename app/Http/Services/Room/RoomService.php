@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Room;
 
+use App\Http\Enums\AvailableEnum;
+use App\Http\Enums\StatusEnum;
 use App\Http\Traits\AttachmentTrait;
 use App\Http\Traits\RepositoryTrait;
 use App\Models\Room;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RoomService
 {
-    use RepositoryTrait,AttachmentTrait;
+    use RepositoryTrait, AttachmentTrait;
 
     protected $model;
 
@@ -20,12 +22,12 @@ class RoomService
 
     public function index()
     {
-        $search  = request()->get('search');
+        $search = request()->get('search');
         $perPage = request()->get('limit', 10);
 
         $parameters = [
-            'select'    => ['id','unit_id','room_type','price_per_night','capacity','description_en','description_ar','rules_en','rules_ar','is_available'],
-            'relations' => ['media:id,name,path,model_id,model_type','unit:id,name,description_en,description_ar,status,type'],
+            'select' => ['id', 'unit_id', 'room_type', 'price_per_night', 'capacity', 'description_en', 'description_ar', 'rules_en', 'rules_ar', 'is_available'],
+            'relations' => ['media:id,name,path,model_id,model_type', 'unit:id,name,description_en,description_ar,status,type'],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -40,15 +42,15 @@ class RoomService
     public function show(int $id)
     {
         $parameters = [
-            'select'    => ['id','unit_id','room_type','price_per_night','capacity','description_en','description_ar','rules_en','rules_ar','is_available'],
-            'relations' => ['media:id,name,path,model_id,model_type','unit:id,name,description_en,description_ar,status,type'],
+            'select' => ['id', 'unit_id', 'room_type', 'price_per_night', 'capacity', 'description_en', 'description_ar', 'rules_en', 'rules_ar', 'is_available'],
+            'relations' => ['media:id,name,path,model_id,model_type', 'unit:id,name,description_en,description_ar,status,type'],
         ];
         return $this->getOne($this->model, $id, $parameters);
     }
 
     public function store(array $request)
     {
-        $data= $this->create($this->model, $request);
+        $data = $this->create($this->model, $request);
         if (isset($request['images'])) {
             $this->addGroupMedia($data, $request['images'], 'units', 'room_image');
         }
@@ -78,5 +80,20 @@ class RoomService
             $q->orWhere('rules_en', 'LIKE', "%{$search}%");
             $q->orWhere('rules_ar', 'LIKE', "%{$search}%");
         });
+    }
+
+    public function toggleStatus(int $id)
+    {
+        $parameters = [
+            'select' => ['id', 'is_available'],
+            'where' => [
+                ['id', '=', $id],
+            ]
+        ];
+        $data = $this->query($this->model, $parameters)->first();
+        $newStatus = $data->is_available == AvailableEnum::AVAILABLE->value
+            ? AvailableEnum::NOT_AVAILABLE->value
+            : AvailableEnum::AVAILABLE->value;
+        return $this->edit($this->model, ['is_available'=>$newStatus], $id);
     }
 }
