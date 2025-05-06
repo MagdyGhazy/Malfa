@@ -43,7 +43,7 @@ class UnitService
     {
         $parameters = [
             'select' => ['id', 'name', 'description_en', 'description_ar', 'type', 'rating', 'available_rooms', 'user_id', 'status'],
-            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type'],
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type' ,'rooms:id,unit_id,room_type,price_per_night,capacity,description_en,description_ar,rules_en,rules_ar,is_available'],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
