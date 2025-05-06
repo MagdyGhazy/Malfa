@@ -65,6 +65,8 @@ class Unit extends Model
     {
         return $this->morphMany(Media::class, 'model');
     }
-
-
+    public function features()
+    {
+        return $this->morphToMany(Feature::class, 'model');
+    }
 }

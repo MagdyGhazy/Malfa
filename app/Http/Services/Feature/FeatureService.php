@@ -24,7 +24,7 @@ class FeatureService
 
         $parameters = [
             'select' => ['id', 'name_en', 'name_ar', 'type'],
-//            'relations' => [],
+            'relations' => ['units:id,name'],
 //            'where' => [
 //                 ['status', '=', 'active'],
 //            ]
@@ -43,6 +43,7 @@ class FeatureService
     {
         $parameters = [
             'select' => ['id', 'name_en', 'name_ar', 'type'],
+            'relations' => ['units:id,name'],
 //            'relations' => [],
 //            'where' => [
 //                 ['status', '=', 'active'],
