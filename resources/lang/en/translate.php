@@ -26,5 +26,7 @@ return [
     'units'         => 'units',
     'active'        => 'active',
     'inactive'      => 'inactive',
+    'not_available' => 'not available',
+    'available'     => 'available',
 
 ];

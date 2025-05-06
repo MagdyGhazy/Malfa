@@ -48,7 +48,7 @@ class Unit extends Model
     }
     public function getStatusDescriptionAttribute()
     {
-        return $this->status !== null ? StatusEnum::getDescription($this->status) : __('translate.unknown');
+        return StatusEnum::getDescription($this->status) ;
     }
 
 

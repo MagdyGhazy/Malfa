@@ -27,6 +27,15 @@ return [
     'units'         => 'الوحدات',
     'active'        => 'نشط',
     'inactive'      => 'غير نشط',
+    'not_available' => 'غير متاح',
+    'available'     => 'متاح',
+    'single'        => 'غرفة فردية',
+    'double'        => 'غرفة مزدوجة',
+    'triple'        => 'غرفة ثلاثية',
+    'suite'         => 'جناح',
+    'studio'        => 'استوديو',
+    'family'        => 'غرفة عائلية',
+    'rooms'         => 'الغرف',
 ];
 
 
