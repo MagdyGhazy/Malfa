@@ -105,4 +105,9 @@ class User extends Authenticatable
     {
         return $this->morphOne(Address::class, 'model');
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
