@@ -40,7 +40,7 @@ class AddressService
     {
         $parameters = [
             'select' => ['id', 'address_line_en', 'address_line_ar', 'zip_code', 'lat', 'long', 'city_id'],
-            'relations' => ['city:id,name'],
+            'relations' => ['city:id,name,country_id,state_id', 'city.state:id,name', 'city.country:id,name,native,iso_code'],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
