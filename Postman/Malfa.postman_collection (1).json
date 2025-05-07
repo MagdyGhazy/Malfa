@@ -1,0 +1,2488 @@
+{
+	"info": {
+		"_postman_id": "05f9cef3-e797-437e-a789-344f252b2c10",
+		"name": "Malfa",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37485566"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "MagdyGhazy",
+									"description": "name",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "magdy@gmail.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "password",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01001014249",
+									"description": "phone",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"description": "2 for Partner or 3 for Visitor",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if (jsonData.data && jsonData.data.token) {\r",
+									"    pm.environment.set(\"token\", jsonData.data.token);\r",
+									"} else if (jsonData.data && jsonData.data.access_token) {\r",
+									"    pm.environment.set(\"token\", jsonData.data.access_token);\r",
+									"} else {\r",
+									"    console.log(\"No token found in the response\");\r",
+									"    console.log(\"Response structure:\", JSON.stringify(jsonData));\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"phone\"    : \"01021783997\", \r\n    \"email\"    : \"super@admin.com\", \r\n    \"password\" : \"password\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Mag",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0126378418579",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"description": "in 1,2,3",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/megog/OneDrive/Pictures/08F6DA93-61FF-4CBE-B8CE-815C06310001.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test Update",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "012638478579",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"description": "in 1,2,3",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/megog/OneDrive/Pictures/08F6DA93-61FF-4CBE-B8CE-815C063100011.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true,
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "sup",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_en\"         : \"test r\", \r\n    \"name_ar\"         : \"اختبار دور\", \r\n    \"permissions\"     : [1,2,3,4,5]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_en\"         : \"test role\", \r\n    \"name_ar\"         : \"اختبار دور\", \r\n    \"permissions\"     : [1,2,3,4]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/role/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Permissions",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/get/permissions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"get",
+								"permissions"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "users",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Permission",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"description\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/role/permission/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"permission",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Countries & Cities",
+			"item": [
+				{
+					"name": "Get All Countries",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/country",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"country"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Mag",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get States By Country",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/country/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"country",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cities By State",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/country/state/3876",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"country",
+								"state",
+								"3876"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/address",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Mag",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/address/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"model_id\": 1,\r\n  \"model_type\": \"App\\\\Models\\\\User\",\r\n  \"address_line_en\": \"King Fahd Road\",\r\n  \"address_line_ar\": \"طريق الملك فهد\",\r\n  \"city_id\": 1,\r\n  \"country_id\": 1,\r\n  \"lat\": \"24.7136\",\r\n  \"long\": \"46.6753\",\r\n  \"zip_code\": \"11564\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/address",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model_id\": 4,\r\n  \"model_type\": \"App\\\\Models\\\\User\",\r\n  \"address_line_en\": \"King Fahd Road585s5s5\",\r\n  \"address_line_ar\": \"طريق الملك فهسينخنيخسند\",\r\n  \"city_id\": 1,\r\n  \"country_id\": 1,\r\n  \"lat\": \"24.7136\",\r\n  \"long\": \"46.6753\",\r\n  \"zip_code\": \"11564\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/address/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/address/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"address",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Landing Pages",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user_landing",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_landing"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Mag",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user_landing/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_landing",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"description_en\":\"fourth landing page\",\r\n \"description_ar\":\"صفحه الهبوط الرابعه \"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/landing",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"landing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"description_en\":\"fourth landing page 44444444\",\r\n \"description_ar\":\"صفحه الهبوط الرابعه444444 \"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/landing/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"landing",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/landing/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"landing",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Units",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/unit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unit"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Mag",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/unit/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unit",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "saudia hotel ",
+									"type": "text"
+								},
+								{
+									"key": "description_en",
+									"value": "shdsuucncisi ",
+									"type": "text"
+								},
+								{
+									"key": "description_ar",
+									"value": "سبتهخستبهبت",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "available_rooms[]",
+									"value": "[1, 2, 3]",
+									"type": "text"
+								},
+								{
+									"key": "address[address_line_en]",
+									"value": "859652 Street",
+									"type": "text"
+								},
+								{
+									"key": "address[address_line_ar]",
+									"value": "859652 شارع",
+									"type": "text"
+								},
+								{
+									"key": "address[city_id]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "address[lat]",
+									"value": "30.1234",
+									"type": "text"
+								},
+								{
+									"key": "address[long]",
+									"value": "31.5678",
+									"type": "text"
+								},
+								{
+									"key": "address[zip_code]",
+									"value": "5826",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": [
+										"/C:/Users/z/Pictures/Copy of +.png",
+										"/C:/Users/z/Pictures/aaa.png",
+										"/C:/Users/z/Pictures/Capture.PNG"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/unit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "saudiaGYHGBYGYGTFTGFDCRF",
+									"type": "text"
+								},
+								{
+									"key": "description_en",
+									"value": "shdsuucncisi ",
+									"type": "text"
+								},
+								{
+									"key": "description_ar",
+									"value": "سبتهخستبهبت",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "available_rooms[]",
+									"value": "[1, 2, 3]",
+									"type": "text"
+								},
+								{
+									"key": "address[address_line_en]",
+									"value": "859652 Street",
+									"type": "text"
+								},
+								{
+									"key": "address[address_line_ar]",
+									"value": "859652 شارع",
+									"type": "text"
+								},
+								{
+									"key": "address[city_id]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "address[lat]",
+									"value": "30.1234",
+									"type": "text"
+								},
+								{
+									"key": "address[long]",
+									"value": "31.5678",
+									"type": "text"
+								},
+								{
+									"key": "address[zip_code]",
+									"value": "5826",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/z/Pictures/nnnnnnnn.png"
+								},
+								{
+									"key": "\n_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/unit/8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unit",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/unit/10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unit",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Features",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/feature",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"feature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/feature/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"feature",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name_en\": \"Wi-Fi\",\n  \"name_ar\": \"واي فاي\",\n  \"type\": [10,11,12]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/feature",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"feature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name_en\": \"Bluetooth\",\n  \"name_ar\": \"بلوتوث\",\n  \"type\": [13,14,15]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/feature/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"feature",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/feature/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"feature",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## 📘 API Documentation: **Features**\n\n### Base URL\n\n```\narduinoCopyEdithttp://your-domain.com/api\n\n ```\n\n---\n\n## 🔐 Authentication\n\nAll endpoints are protected. You must include a **Bearer Token** in the `Authorization` header.\n\n### Example:\n\n```\nmakefileCopyEditAuthorization: Bearer your_token_here\n\n ```\n\n---\n\n## 📄 Endpoints\n\n---\n\n### 🔹 Get All Features\n\n- **URL:** `/feature`\n    \n- **Method:** `GET`\n    \n- **Auth Required:** ✅ Yes\n    \n\n#### ✅ Success Response\n\n```\njsonCopyEdit{\n  \"status\": \"success\",\n  \"message\": \"All Features\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name_en\": \"Color\",\n      \"name_ar\": \"اللون\",\n      \"model_id\": 1,\n      \"model_type\": \"App\\\\Models\\\\Feature\"\n    }\n  ]\n}\n\n ```\n\n#### 🔴 Error Response (Unauthorized)\n\n```\njsonCopyEdit{\n  \"message\": \"Unauthenticated.\"\n}\n\n ```\n\n---\n\n### 🔹 Get Feature by ID\n\n- **URL:** `/feature/{id}`\n    \n- **Method:** `GET`\n    \n- **Auth Required:** ✅ Yes\n    \n\n#### ✅ Success Response\n\n```\njsonCopyEdit{\n  \"status\": \"success\",\n  \"message\": \"Feature Details\",\n  \"data\": {\n    \"id\": 1,\n    \"name_en\": \"Color\",\n    \"name_ar\": \"اللون\",\n    \"model_id\": 1,\n    \"model_type\": \"App\\\\Models\\\\Feature\"\n  }\n}\n\n ```\n\n#### 🔴 Error Response (Not Found)\n\n```\njsonCopyEdit{\n  \"status\": \"error\",\n  \"message\": \"Feature not found\"\n}\n\n ```\n\n---\n\n### 🔹 Create New Feature\n\n- **URL:** `/feature`\n    \n- **Method:** `POST`\n    \n- **Auth Required:** ✅ Yes\n    \n\n#### 📦 Body Parameters (JSON)\n\n```\njsonCopyEdit{\n  \"model_id\": 1,\n  \"model_type\": \"App\\\\Models\\\\Feature\",\n  \"name_en\": \"Color\",\n  \"name_ar\": \"اللون\"\n}\n\n ```\n\n#### ✅ Success Response\n\n```\njsonCopyEdit{\n  \"status\": \"success\",\n  \"message\": \"Feature created successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"model_id\": 1,\n    \"model_type\": \"App\\\\Models\\\\Feature\",\n    \"name_en\": \"Color\",\n    \"name_ar\": \"اللون\"\n  }\n}\n\n ```\n\n#### 🔴 Error Response (Validation)\n\n```\njsonCopyEdit{\n  \"status\": \"error\",\n  \"message\": \"Validation error\",\n  \"errors\": {\n    \"name_en\": [\"The name_en field is required.\"]\n  }\n}\n\n ```\n\n---\n\n### 🔹 Update Feature\n\n- **URL:** `/feature/{id}`\n    \n- **Method:** `PUT` or `PATCH`\n    \n- **Auth Required:** ✅ Yes\n    \n\n#### 📦 Body Parameters (JSON)\n\n```\njsonCopyEdit{\n  \"name_en\": \"Size\",\n  \"name_ar\": \"الحجم\"\n}\n\n ```\n\n#### ✅ Success Response\n\n```\njsonCopyEdit{\n  \"status\": \"success\",\n  \"message\": \"Feature updated successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"name_en\": \"Size\",\n    \"name_ar\": \"الحجم\"\n  }\n}\n\n ```\n\n---\n\n### 🔹 Delete Feature\n\n- **URL:** `/feature/{id}`\n    \n- **Method:** `DELETE`\n    \n- **Auth Required:** ✅ Yes\n    \n\n#### ✅ Success Response\n\n```\njsonCopyEdit{\n  \"status\": \"success\",\n  \"message\": \"Feature deleted successfully\"\n}\n\n ```\n\n#### 🔴 Error Response (Not Found)\n\n```\njsonCopyEdit{\n  \"status\": \"error\",\n  \"message\": \"Feature not found\"\n}\n\n ```\n\n---\n\n## ℹ️ Notes\n\n- `model_type` should be a fully qualified class name such as:\n    \n    - `App\\\\Models\\\\Feature`\n        \n- Always validate your inputs. Use proper casing and escape `\\` with `\\\\` in JSON."
+		},
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/activity/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name_en",
+									"value": "Swimming Lesson",
+									"type": "text"
+								},
+								{
+									"key": "name_ar",
+									"value": "درس سباحه",
+									"type": "text"
+								},
+								{
+									"key": "description_en",
+									"value": "Learn to swim in 5 days.",
+									"type": "text"
+								},
+								{
+									"key": "description_ar",
+									"value": "تعلم السباحة في خمسة أيام",
+									"type": "text"
+								},
+								{
+									"key": "from",
+									"value": "2025-06-01 10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "2025-06-01 12:00:00",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "features[0]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "features[1]",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "images[0]",
+									"type": "file",
+									"src": "/home/developer/Pictures/Screenshots/Screenshot from 2025-05-06 16-12-32.png"
+								},
+								{
+									"key": "images[1]",
+									"type": "file",
+									"src": "/home/developer/Desktop/2.jpeg"
+								},
+								{
+									"key": "address[address_line_en]",
+									"value": "15 Tahrir Street",
+									"type": "text"
+								},
+								{
+									"key": "address[address_line_ar]",
+									"value": "١٥ شارع التحرير",
+									"type": "text"
+								},
+								{
+									"key": "address[city_id]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "address[lat]",
+									"value": "30.0444",
+									"type": "text"
+								},
+								{
+									"key": "address[long]",
+									"value": "31.2357",
+									"type": "text"
+								},
+								{
+									"key": "address[zip_code]",
+									"value": "12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": 1,\n  \"name_en\": \"Test Activity\",\n  \"name_ar\": \"نشاط تجريبي\",\n  \"description_en\": \"Some description\",\n  \"description_ar\": \"وصف معين\",\n  \"price\": 100,\n  \"from\": \"2025-05-01\",\n  \"to\": \"2025-05-10\",\n  \"status\": 1,\n  \"features\": [1, 2],\n  \"address\": {\n    \"address_line_en\": \"Address EN\",\n    \"address_line_ar\": \"العنوان بالعربية\",\n    \"city_id\": 1,\n    \"lat\": 30.1234,\n    \"long\": 31.5678,\n    \"zip_code\": \"12345\"\n  }\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/activity/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/activity/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### 1\\. 📄 `GET /api/activities`\n\n**Description**: Get all activities (paginated).  \n**Query Params**:\n\n- `search` (optional): search by name or description.\n    \n- `limit` (optional): number of results per page.\n    \n\n**Response Example**:\n\n```\njsonCopyEdit{\n  \"status\": true,\n  \"code\": 200,\n  \"message\": \"All Activities\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name_en\": \"Horse Riding\",\n      \"price\": 200,\n      \"from\": \"2025-01-01\",\n      \"to\": \"2025-01-10\",\n      \"user\": {\n        \"id\": 3,\n        \"name\": \"Ali\"\n      },\n      \"features\": [...],\n      \"media\": [...],\n      \"address\": {...}\n    }\n  ]\n}\n\n ```\n\n---\n\n### 2\\. 📄 `GET /api/activities/{id}`\n\n**Description**: Get a single activity by ID.  \n**Path Param**:\n\n- `id`: Activity ID.\n    \n\n**Response Example**:\n\n```\njsonCopyEdit{\n  \"status\": true,\n  \"code\": 200,\n  \"message\": \"Activity details\",\n  \"data\": {\n    \"id\": 1,\n    \"name_en\": \"Horse Riding\",\n    \"price\": 200,\n    \"description_en\": \"...\",\n    ...\n  }\n}\n\n ```\n\n---\n\n### 3\\. 📝 `POST /api/activities`\n\n**Description**: Create a new activity.  \n**Body Type**: `form-data`  \n**Fields**:\n\n- `user_id` (required)\n    \n- `name_en`, `name_ar` (required)\n    \n- `description_en`, `description_ar` (optional)\n    \n- `price` (required, numeric)\n    \n- `from`, `to` (date range, required)\n    \n- `status` (required, 0 or 1)\n    \n- `features[]` (optional, array of feature IDs)\n    \n- `address[address_line_en]`, `address[address_line_ar]` (required)\n    \n- `address[city_id]` (required)\n    \n- `address[lat]`, `address[long]` (required)\n    \n- `address[zip_code]` (optional)\n    \n- `images[]` (optional, array of image files)\n    \n\n**Response Example**:\n\n```\njsonCopyEdit{\n  \"status\": true,\n  \"code\": 201,\n  \"message\": \"Activity created successfully\",\n  \"data\": {\n    \"id\": 5,\n    \"name_en\": \"Safari\",\n    ...\n  }\n}\n\n ```\n\n---\n\n### 4\\. 🛠️ `PUT /api/activities/{id}`\n\n**Description**: Update an existing activity.  \n**Path Param**:\n\n- `id`: Activity ID.\n    \n\n**Body Type**: `form-data`  \n**Fields** (same as store, but all required):\n\n- `user_id`, `name_en`, `name_ar`, `description_en`, `description_ar`, `price`, `from`, `to`, `status`\n    \n- `features[]`\n    \n- `address[...]`\n    \n- `images[]`\n    \n\n**Response Example**:\n\n```\njsonCopyEdit{\n  \"status\": true,\n  \"code\": 201,\n  \"message\": \"Activity updated successfully\",\n  \"data\": {\n    \"id\": 5,\n    \"name_en\": \"Safari Updated\",\n    ...\n  }\n}\n\n ```\n\n---\n\n### 5\\. ❌ `DELETE /api/activities/{id}`\n\n**Description**: Delete an activity by ID.  \n**Path Param**:\n\n- `id`: Activity ID.\n    \n\n**Response Example**:\n\n```\njsonCopyEdit{\n  \"status\": true,\n  \"code\": 201,\n  \"message\": \"Activity deleted successfully\",\n  \"data\": null\n}\n\n ```\n\n---\n\n## 🧪 Authorization\n\nIf you're using token-based authentication (e.g. Sanctum or Passport), make sure to:\n\n- Set `Authorization: Bearer {token}` in the headers."
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Get All",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/room?search=وصف1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "وصف1"
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/room/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "unit_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "room_type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "price_per_night",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "capacity",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "description_en",
+									"value": "ksdksodkosk",
+									"type": "text"
+								},
+								{
+									"key": "description_ar",
+									"value": "ممممممممممممممممممم",
+									"type": "text"
+								},
+								{
+									"key": "rules_en",
+									"value": "djisidjisdjsjisjdijsi djisijdis",
+									"type": "text"
+								},
+								{
+									"key": "rules_ar",
+									"value": "يتيسهتيهتسهيسهيت هيهستيهستيه سهستهيتسهيتس",
+									"type": "text"
+								},
+								{
+									"key": "is_available",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": [
+										"/C:/Users/z/Pictures/aaa.png",
+										"/C:/Users/z/Pictures/Capture.PNG"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "unit_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "room_type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "price_per_night",
+									"value": "522",
+									"type": "text"
+								},
+								{
+									"key": "capacity",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "description_en",
+									"value": "mmmmmmm",
+									"type": "text"
+								},
+								{
+									"key": "description_ar",
+									"value": "وووووووووووووو",
+									"type": "text"
+								},
+								{
+									"key": "rules_en",
+									"value": "abbbbbbbb",
+									"type": "text"
+								},
+								{
+									"key": "rules_ar",
+									"value": "هههههههههههههه",
+									"type": "text"
+								},
+								{
+									"key": "is_available",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "images[]",
+									"type": "file",
+									"src": "/C:/Users/z/Pictures/Screenshot 2025-02-27 093628.png"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/room/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followRedirects": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/room/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Available",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}/room/is_available/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"is_available",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
