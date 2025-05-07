@@ -28,7 +28,7 @@ return [
     'active'        => 'نشط',
     'inactive'      => 'غير نشط',
     'name'          => 'الاسم',
-    'description'   => 'الوصف'
+    'description'   => 'الوصف',
     'not_available' => 'غير متاح',
     'available'     => 'متاح',
     'single'        => 'غرفة فردية',
