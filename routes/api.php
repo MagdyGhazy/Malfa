@@ -120,16 +120,13 @@ Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
 });
 
 
-
-
-
-     /** ===========| Activity |============================| 2025-05-06 |================= **/
-     Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
-        Route::controller(\App\Http\Controllers\Api\Activity\ActivityController::class)->group(function () {
-            Route::get('/', 'index')->middleware('permission:list activitys');
-            Route::get('/{id}', 'show')->middleware('permission:show activitys');
-            Route::post('/', 'store')->middleware('permission:create activitys');
-            Route::put('/{id}', 'update')->middleware('permission:edit activitys');
-            Route::delete('/{id}', 'destroy')->middleware('permission:delete activitys');
-        });
+/** ===========| Activity |============================| 2025-05-06 |================= **/
+Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Activity\ActivityController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list activitys');
+        Route::get('/{id}', 'show')->middleware('permission:show activitys');
+        Route::post('/', 'store')->middleware('permission:create activitys');
+        Route::put('/{id}', 'update')->middleware('permission:edit activitys');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete activitys');
     });
+});
