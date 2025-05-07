@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Api\Unit;
+namespace App\Http\Controllers\Api\Room;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Unit\StoreUnitRequest;
-use App\Http\Requests\Unit\UpdateUnitRequest;
-use App\Http\Services\Unit\UnitService;
+use App\Http\Requests\Room\StoreRoomRequest;
+use App\Http\Requests\Room\UpdateRoomRequest;
+use App\Http\Services\Room\RoomService;
 use App\Http\Traits\ResponseTrait;
 
 
-class UnitController extends Controller
+class RoomController extends Controller
 {
     use ResponseTrait;
 
     protected $service;
     protected string $key;
 
-    public function __construct(UnitService $service)
+    public function __construct(RoomService $service)
     {
         $this->service = $service;
-        $this->key = 'Unit';
+        $this->key = 'Room';
     }
 
 
@@ -37,16 +37,15 @@ class UnitController extends Controller
     }
 
 
-    public function store(StoreUnitRequest $request)
+    public function store(StoreRoomRequest $request)
     {
         $data = $this->service->store($request->validated());
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' created successfully') : $this->error(null, 404, 'Cannot create ' . $this->key, $data['error']);
     }
 
 
-    public function update(UpdateUnitRequest $request, $id)
+    public function update(UpdateRoomRequest $request, $id)
     {
-
        $data = $this->service->update($request->validated(), $id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' updated successfully') : $this->error(null, 404, 'Cannot update ' . $this->key, $data['error']);
     }
@@ -60,6 +59,6 @@ class UnitController extends Controller
     public function toggleStatus($id)
     {
         $data = $this->service->toggleStatus($id);
-        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Status Changed successfully') : $this->error(null, 404, 'Cannot Change Status ' . $this->key, $data['error']);
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Available Changed successfully') : $this->error(null, 404, 'Cannot Change Available ' . $this->key, $data['error']);
     }
 }

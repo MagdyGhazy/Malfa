@@ -130,3 +130,16 @@ Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function 
         Route::delete('/{id}', 'destroy')->middleware('permission:delete activitys');
     });
 });
+
+
+/** ===========| Room |============================| 2025-05-06 |================= **/
+Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Room\RoomController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list rooms');
+        Route::get('/{id}', 'show')->middleware('permission:show rooms');
+        Route::post('/', 'store')->middleware('permission:create rooms');
+        Route::put('/{id}', 'update')->middleware('permission:edit rooms');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete rooms');
+        Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
+    });
+});

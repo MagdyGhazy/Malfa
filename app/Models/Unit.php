@@ -48,7 +48,7 @@ class Unit extends Model
     }
     public function getStatusDescriptionAttribute()
     {
-        return $this->status !== null ? StatusEnum::getDescription($this->status) : __('translate.unknown');
+        return StatusEnum::getDescription($this->status) ;
     }
 
 
@@ -69,4 +69,12 @@ class Unit extends Model
     {
         return $this->morphToMany(Feature::class, 'model');
     }
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+
+
+
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description_ar')->nullable();
             $table->tinyInteger('type');
             $table->unsignedTinyInteger('rating')->default(0);
-            $table->boolean('status')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->json('available_rooms')->nullable();
             $table->timestamps();
         });

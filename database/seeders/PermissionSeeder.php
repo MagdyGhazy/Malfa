@@ -24,6 +24,8 @@ class PermissionSeeder extends Seeder
             'landings'           => ['list', 'show', 'create', 'edit', 'delete'],
             'units'              => ['list', 'show', 'create', 'edit', 'delete'],
             'activities'         => ['list', 'show', 'create', 'edit', 'delete'],
+            'rooms'              => ['list', 'show', 'create', 'edit', 'delete'],
+
         ];
 
         foreach ($permissions as $module => $actions) {
