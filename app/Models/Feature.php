@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Feature extends Model
 {
@@ -24,31 +25,28 @@ class Feature extends Model
         'type' => 'array',
     ];
 
-    /**
-     * @param $query
-     * @param $modelType
-     * @return mixed
-     */
+    public function getTranslatedNameAttribute(): string
+    {
+        return App::getLocale() === 'en' ? $this->name_en : $this->name_ar;
+    }
+
     public function scopeForModel($query, $modelType)
     {
         return $query->whereJsonContains('type', $modelType);
     }
 
-//    /**
-//     * @param $value
-//     * @return mixed
-//     */
-//    public function getTypeAttribute($value)
-//    {
-//        return json_decode($value, true);
-//    }
-//
-//    /**
-//     * @param $value
-//     * @return void
-//     */
-//    public function setTypeAttribute($value)
-//    {
-//        $this->attributes['type'] = json_encode($value);
-//    }
+    public function getTypeAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setTypeAttribute($value)
+    {
+        $this->attributes['type'] = json_encode($value);
+    }
+
+    public function units()
+    {
+        return $this->morphedByMany(Unit::class, 'model');
+    }
 }

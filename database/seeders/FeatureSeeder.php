@@ -18,17 +18,17 @@ class FeatureSeeder extends Seeder
             [
                 'name_en' => 'Color',
                 'name_ar' => 'اللون',
-                'type'    => ['red', 'blue', 'green'],
+                'type'    => [1, 2, 3],
             ],
             [
                 'name_en' => 'Size',
                 'name_ar' => 'الحجم',
-                'type'    => ['S', 'M', 'L', 'XL'],
+                'type'    => [4, 5, 6, 7],
             ],
             [
                 'name_en' => 'Material',
                 'name_ar' => 'الخامة',
-                'type'    => ['cotton', 'polyester', 'leather'],
+                'type'    => [8, 9, 10],
             ],
         ];
 
