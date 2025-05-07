@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureSeeder::class);
         $this->call(LandingSeeder::class);
         $this->call(UnitSeeder::class);
+        $this->call(ActivitySeeder::class);
         $this->call(RoomSeeder::class);
     }
 }

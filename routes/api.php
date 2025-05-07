@@ -46,87 +46,100 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     });
 });
 
-     /** ===========| User |============================| 2025-04-25 |================= **/
-     Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\User\UserController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list users');
-             Route::get('/{id}', 'show')->middleware('permission:show users');
-             Route::post('/', 'store')->middleware('permission:create users');
-             Route::put('/{id}', 'update')->middleware('permission:edit users');
-             Route::delete('/{id}', 'destroy')->middleware('permission:delete users');
-         });
-     });
-
-
-
-     /** ===========| Address |============================| 2025-05-03 |================= **/
-     Route::group(['prefix' => 'address', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\Address\AddressController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list addresses');
-             Route::get('/{id}', 'show')->middleware('permission:show addresses');
-             Route::post('/', 'store')->middleware('permission:create addresses');
-             Route::put('/{id}', 'update')->middleware('permission:edit addresses');
-             Route::delete('/{id}', 'destroy')->middleware('permission:delete addresses');
-         });
-     });
-
-
-
-     /** ===========| Country |============================| 2025-05-03 |================= **/
-     Route::group(['prefix' => 'country', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\Country\CountryController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list countries');
-             Route::get('/{id}', 'show')->middleware('permission:show countries');
-             Route::get('/state/{id}', 'getCities')->middleware('permission:show countries');
-         });
-     });
-
-
-
-    /** ===========| Feature |============================| 2025-05-03 |================= **/
-    Route::group(['prefix' => 'feature', 'middleware' => 'auth:sanctum'], function () {
-        Route::controller(\App\Http\Controllers\Api\Feature\FeatureController::class)->group(function () {
-            Route::get('/', 'index')->middleware('permission:list features');
-            Route::get('/{id}', 'show')->middleware('permission:show features');
-            Route::post('/', 'store')->middleware('permission:create features');
-            Route::put('/{id}', 'update')->middleware('permission:edit features');
-            Route::delete('/{id}', 'destroy')->middleware('permission:delete features');
-        });
+/** ===========| User |============================| 2025-04-25 |================= **/
+Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\User\UserController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list users');
+        Route::get('/{id}', 'show')->middleware('permission:show users');
+        Route::post('/', 'store')->middleware('permission:create users');
+        Route::put('/{id}', 'update')->middleware('permission:edit users');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete users');
     });
+});
 
 
-
-    /** ===========| Landing |============================| 2025-05-03 |================= **/
-    Route::group(['prefix' => 'user_landing'], function () {
-        Route::controller(\App\Http\Controllers\Api\Landing\LandingController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/{id}', 'show');
-        });
+/** ===========| Address |============================| 2025-05-03 |================= **/
+Route::group(['prefix' => 'address', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Address\AddressController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list addresses');
+        Route::get('/{id}', 'show')->middleware('permission:show addresses');
+        Route::post('/', 'store')->middleware('permission:create addresses');
+        Route::put('/{id}', 'update')->middleware('permission:edit addresses');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete addresses');
     });
-
-     /** ===========| Unit |============================| 2025-05-04 |================= **/
-     Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\Unit\UnitController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list units');
-             Route::get('/{id}', 'show')->middleware('permission:show units');
-             Route::post('/', 'store')->middleware('permission:create units');
-             Route::put('/{id}', 'update')->middleware('permission:edit units');
-             Route::delete('/{id}', 'destroy')->middleware('permission:delete units');
-             Route::post('/is_active/{id}','toggleStatus')->middleware('permission:edit units');
-
-         });
-     });
+});
 
 
+/** ===========| Country |============================| 2025-05-03 |================= **/
+Route::group(['prefix' => 'country', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Country\CountryController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list countries');
+        Route::get('/{id}', 'show')->middleware('permission:show countries');
+        Route::get('/state/{id}', 'getCities')->middleware('permission:show countries');
+    });
+});
 
-     /** ===========| Room |============================| 2025-05-06 |================= **/
-     Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
-         Route::controller(\App\Http\Controllers\Api\Room\RoomController::class)->group(function () {
-             Route::get('/', 'index')->middleware('permission:list rooms');
-             Route::get('/{id}', 'show')->middleware('permission:show rooms');
-             Route::post('/', 'store')->middleware('permission:create rooms');
-             Route::put('/{id}', 'update')->middleware('permission:edit rooms');
-             Route::delete('/{id}', 'destroy')->middleware('permission:delete rooms');
-             Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
-         });
-     });
+
+/** ===========| Feature |============================| 2025-05-03 |================= **/
+Route::group(['prefix' => 'feature', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Feature\FeatureController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list features');
+        Route::get('/{id}', 'show')->middleware('permission:show features');
+        Route::post('/', 'store')->middleware('permission:create features');
+        Route::put('/{id}', 'update')->middleware('permission:edit features');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete features');
+    });
+});
+
+
+/** ===========| Landing |============================| 2025-05-03 |================= **/
+Route::group(['prefix' => 'user_landing'], function () {
+    Route::controller(\App\Http\Controllers\Api\Landing\LandingController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'show');
+    });
+});
+
+Route::group(['prefix' => 'landing', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Landing\LandingController::class)->group(function () {
+        Route::post('/', 'store')->middleware('permission:create landings');
+        Route::put('/{id}', 'update')->middleware('permission:edit landings');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete landings');
+    });
+});
+
+/** ===========| Unit |============================| 2025-05-04 |================= **/
+Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Unit\UnitController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list units');
+        Route::get('/{id}', 'show')->middleware('permission:show units');
+        Route::post('/', 'store')->middleware('permission:create units');
+        Route::put('/{id}', 'update')->middleware('permission:edit units');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete units');
+    });
+});
+
+
+/** ===========| Activity |============================| 2025-05-06 |================= **/
+Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Activity\ActivityController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list activitys');
+        Route::get('/{id}', 'show')->middleware('permission:show activitys');
+        Route::post('/', 'store')->middleware('permission:create activitys');
+        Route::put('/{id}', 'update')->middleware('permission:edit activitys');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete activitys');
+    });
+});
+
+
+/** ===========| Room |============================| 2025-05-06 |================= **/
+Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
+    Route::controller(\App\Http\Controllers\Api\Room\RoomController::class)->group(function () {
+        Route::get('/', 'index')->middleware('permission:list rooms');
+        Route::get('/{id}', 'show')->middleware('permission:show rooms');
+        Route::post('/', 'store')->middleware('permission:create rooms');
+        Route::put('/{id}', 'update')->middleware('permission:edit rooms');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete rooms');
+        Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
+    });
+});

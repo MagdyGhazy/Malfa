@@ -22,8 +22,8 @@ class StoreFeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|unique:features|string|max:255',
+            'name_ar' => 'required|unique:features|string|max:255',
             'type'    => 'required|array',
         ];
     }

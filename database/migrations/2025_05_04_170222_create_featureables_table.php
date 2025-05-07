@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('featureables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('feature_id')->constrained()->onDelete('cascade');
+            $table->foreignId('feature_id')->constrained('features')->onDelete('cascade');
             $table->unsignedBigInteger('model_id');
             $table->string('model_type');
             $table->timestamps();
