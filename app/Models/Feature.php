@@ -44,9 +44,4 @@ class Feature extends Model
     {
         $this->attributes['type'] = json_encode($value);
     }
-
-    public function units()
-    {
-        return $this->morphedByMany(Unit::class, 'model');
-    }
 }

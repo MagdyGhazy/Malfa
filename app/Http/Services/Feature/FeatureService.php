@@ -24,7 +24,6 @@ class FeatureService
 
         $parameters = [
             'select' => ['id', 'name_en', 'name_ar', 'type'],
-            'relations' => ['units:id,name'],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -40,11 +39,6 @@ class FeatureService
     {
         $parameters = [
             'select' => ['id', 'name_en', 'name_ar', 'type'],
-            'relations' => ['units:id,name'],
-//            'relations' => [],
-//            'where' => [
-//                 ['status', '=', 'active'],
-//            ]
         ];
 
         return $this->getOne($this->model, $id, $parameters);

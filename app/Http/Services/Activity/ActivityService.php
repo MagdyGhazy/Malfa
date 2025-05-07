@@ -25,7 +25,7 @@ class ActivityService
 
         $parameters = [
             'select' => ['id', 'user_id', 'name_en', 'name_ar', 'from', 'to', 'price'],
-            'relations' => ['user:id,name', 'address', 'media', 'features'],
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'features:id,name_en,name_ar,type'],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -41,7 +41,7 @@ class ActivityService
     {
         $parameters = [
             'select' => ['id', 'user_id', 'name_en', 'name_ar', 'from', 'to', 'price'],
-            'relations' => ['user:id,name', 'address', 'media', 'features'],
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type', 'features:id,name_en,name_ar,type'],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
@@ -83,9 +83,6 @@ class ActivityService
 
     public function destroy(int $id)
     {
-        $activity = $this->model->findOrFail($id);
-        $this->deleteMedia($activity);
-        $activity->address()->delete();
         return $this->delete($this->model, $id);
     }
 
