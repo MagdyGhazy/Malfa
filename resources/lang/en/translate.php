@@ -27,7 +27,7 @@ return [
     'active'        => 'active',
     'inactive'      => 'inactive',
     'name'          => 'name',
-    'description'   => 'description'
+    'description'   => 'description',
     'not_available' => 'not available',
     'available'     => 'available',
 
