@@ -39,6 +39,8 @@ class UpdateUnitRequest extends FormRequest
             'address.zip_code'        => 'nullable|string|max:20',
             'images'                  => 'nullable|array',
             'images.*'                => 'image|mimes:jpeg,png,jpg,gif,webp|max:1042',
+            'features'                => 'nullable|array',
+            'features.*'              => 'exists:features,id',
         ];
     }
 }

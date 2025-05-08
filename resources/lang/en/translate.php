@@ -30,5 +30,12 @@ return [
     'description'   => 'description',
     'not_available' => 'not available',
     'available'     => 'available',
+    'single'        => 'single',
+    'double'        => 'double',
+    'triple'        => 'triple',
+    'suite'         => 'suite',
+    'studio'        => 'studio',
+    'family'        => 'family',
+    'rooms'         => 'rooms',
 
 ];

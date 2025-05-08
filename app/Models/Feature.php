@@ -47,6 +47,11 @@ class Feature extends Model
 
     public function units()
     {
-        return $this->morphedByMany(Unit::class, 'model');
+        return $this->morphedByMany(Unit::class, 'model', 'featureables');
+    }
+
+    public function rooms()
+    {
+        return $this->morphedByMany(Room::class, 'model', 'featureables');
     }
 }

@@ -56,9 +56,9 @@ class RoomController extends Controller
         $data = $this->service->destroy($id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' deleted successfully') : $this->error(null, 404, 'Cannot delete ' . $this->key, $data['error']);
     }
-    public function toggleStatus($id)
+    public function toggleAvailable($id)
     {
-        $data = $this->service->toggleStatus($id);
+        $data = $this->service->toggleAvailable($id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Available Changed successfully') : $this->error(null, 404, 'Cannot Change Available ' . $this->key, $data['error']);
     }
 }
