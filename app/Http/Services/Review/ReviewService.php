@@ -2,13 +2,14 @@
 
 namespace App\Http\Services\Review;
 
+use App\Http\Traits\AttachmentTrait;
 use App\Http\Traits\RepositoryTrait;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 
 class ReviewService
 {
-    use RepositoryTrait;
+    use RepositoryTrait, AttachmentTrait;
 
     protected $model;
 
