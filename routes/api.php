@@ -123,11 +123,11 @@ Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
 /** ===========| Activity |============================| 2025-05-06 |================= **/
 Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
     Route::controller(\App\Http\Controllers\Api\Activity\ActivityController::class)->group(function () {
-        Route::get('/', 'index')->middleware('permission:list activitys');
-        Route::get('/{id}', 'show')->middleware('permission:show activitys');
-        Route::post('/', 'store')->middleware('permission:create activitys');
-        Route::put('/{id}', 'update')->middleware('permission:edit activitys');
-        Route::delete('/{id}', 'destroy')->middleware('permission:delete activitys');
+        Route::get('/', 'index')->middleware('permission:list activities');
+        Route::get('/{id}', 'show')->middleware('permission:show activities');
+        Route::post('/', 'store')->middleware('permission:create activities');
+        Route::put('/{id}', 'update')->middleware('permission:edit activities');
+        Route::delete('/{id}', 'destroy')->middleware('permission:delete activities');
     });
 });
 
@@ -143,3 +143,16 @@ Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
         Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
     });
 });
+
+
+
+     /** ===========| Review |============================| 2025-05-09 |================= **/
+     Route::group(['prefix' => 'review', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\Review\ReviewController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list reviews');
+             Route::get('/{id}', 'show')->middleware('permission:show reviews');
+             Route::post('/', 'store')->middleware('permission:create reviews');
+             Route::put('/{id}', 'update')->middleware('permission:edit reviews');
+             Route::delete('/{id}', 'destroy')->middleware('permission:delete reviews');
+         });
+     });

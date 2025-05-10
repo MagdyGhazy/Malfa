@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
@@ -21,6 +22,8 @@ class Activity extends Model
         'price',
     ];
 
+    protected $appends = ['translated_name', 'translated_description'];
+
     public function getTranslatedNameAttribute(): string
     {
         return App::getLocale() === 'en' ? $this->name_en : $this->name_ar;
@@ -28,7 +31,10 @@ class Activity extends Model
 
     public function getTranslatedDescriptionAttribute(): string
     {
-        return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
+        if (App::getLocale() === 'en') {
+            return $this->description_en ?? '';
+        }
+        return $this->description_ar ?? '';
     }
 
     public function user()
@@ -49,5 +55,10 @@ class Activity extends Model
     public function features()
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
+    }
+
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
     }
 }

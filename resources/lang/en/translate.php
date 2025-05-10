@@ -30,5 +30,5 @@ return [
     'description'   => 'description',
     'not_available' => 'not available',
     'available'     => 'available',
-
+    'reviews'       => 'Reviews',
 ];

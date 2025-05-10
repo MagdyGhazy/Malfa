@@ -6,6 +6,7 @@ use App\Http\Enums\AvailableEnum;
 use App\Http\Enums\RoomTypeEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
@@ -56,5 +57,10 @@ class Room extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'model');
+    }
+
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
     }
 }

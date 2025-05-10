@@ -6,6 +6,7 @@ use App\Http\Enums\StatusEnum;
 use App\Http\Enums\UnitTypeEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
@@ -74,7 +75,8 @@ class Unit extends Model
         return $this->hasMany(Room::class);
     }
 
-
-
-
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
+    }
 }
