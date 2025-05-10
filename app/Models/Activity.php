@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
 class Activity extends Model
 {
-    use HasFactory;
+    use HasFactory,AttachmentTrait;
 
     protected $fillable = [
         'user_id',
@@ -21,6 +22,7 @@ class Activity extends Model
         'price',
     ];
 
+    protected $appends = ['translated_name', 'translated_description'];
     public function getTranslatedNameAttribute(): string
     {
         return App::getLocale() === 'en' ? $this->name_en : $this->name_ar;
@@ -28,7 +30,22 @@ class Activity extends Model
 
     public function getTranslatedDescriptionAttribute(): string
     {
-        return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
+        $descriptions = [
+            'en' => $this->description_en,
+            'ar' => $this->description_ar,
+        ];
+
+        return $descriptions[App::getLocale()] ?? '';
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            $model->deleteMedia($model);
+            if ($model->address){
+                $model->address()->delete();
+            }
+        });
     }
 
     public function user()
