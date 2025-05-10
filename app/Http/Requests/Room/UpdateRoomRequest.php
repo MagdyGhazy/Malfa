@@ -33,6 +33,8 @@ class UpdateRoomRequest extends FormRequest
             'is_available'      => 'nullable|in:1,2',
             'images'            => 'nullable|array',
             'images.*'          => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'features'          => 'nullable|array',
+            'features.*'        => 'exists:features,id',
         ];
     }
 }

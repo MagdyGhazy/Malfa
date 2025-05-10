@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 
 class Unit extends Model
 {
-    use HasFactory,AttachmentTrait;
+    use HasFactory, AttachmentTrait;
 
     protected $fillable = [
         'user_id',
@@ -26,7 +26,8 @@ class Unit extends Model
     protected $casts = [
         'available_rooms' => 'array',
     ];
-    protected $appends = ['status_description', 'type_description','translated_description'];
+    protected $appends = ['status_description', 'type_description', 'translated_description'];
+
     public function getTranslatedDescriptionAttribute(): string
     {
         return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
@@ -36,8 +37,11 @@ class Unit extends Model
     {
         static::deleting(function ($model) {
             $model->deleteMedia($model);
-            if ($model->address){
+            if ($model->address) {
                 $model->address()->delete();
+            }
+            if ($model->features) {
+                $model->features()->detach();
             }
         });
     }
@@ -46,9 +50,10 @@ class Unit extends Model
     {
         return UnitTypeEnum::getDescription($this->type);
     }
+
     public function getStatusDescriptionAttribute()
     {
-        return StatusEnum::getDescription($this->status) ;
+        return StatusEnum::getDescription($this->status);
     }
 
 
@@ -61,20 +66,21 @@ class Unit extends Model
     {
         return $this->morphOne(Address::class, 'model');
     }
+
     public function media()
     {
         return $this->morphMany(Media::class, 'model');
     }
+
     public function features()
     {
-        return $this->morphToMany(Feature::class, 'model');
+        return $this->morphToMany(Feature::class, 'model', 'featureables');
     }
+
     public function rooms()
     {
         return $this->hasMany(Room::class);
     }
-
-
 
 
 }

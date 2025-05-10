@@ -28,7 +28,7 @@ class UnitService
 
         $parameters = [
             'select' => ['id', 'name', 'description_en', 'description_ar', 'status', 'type', 'rating', 'available_rooms', 'user_id'],
-            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type'],
+            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',],
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -44,7 +44,11 @@ class UnitService
     {
         $parameters = [
             'select' => ['id', 'name', 'description_en', 'description_ar', 'type', 'rating', 'available_rooms', 'user_id', 'status'],
-            'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code', 'media:id,name,path,model_id,model_type' ,'rooms:id,unit_id,room_type,price_per_night,capacity,description_en,description_ar,rules_en,rules_ar,is_available'],
+            'relations' => ['user:id,name',
+                'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',
+                'media:id,name,path,model_id,model_type' ,
+                'rooms:id,unit_id,room_type,price_per_night,capacity,description_en,description_ar,rules_en,rules_ar,is_available',
+                'features:id,name_en,name_ar'],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
@@ -54,18 +58,25 @@ class UnitService
     {
         $addressData = $request['address'] ?? null;
         unset($request['address']);
-        $unit = $this->create($this->model, $request);
-        $unit->address()->create($addressData);
+        $data = $this->create($this->model, $request);
+        $data->address()->create($addressData);
         if (isset($request['images'])) {
-            $this->addGroupMedia($unit, $request['images'], 'units', 'unit_image');
+            $this->addGroupMedia($data, $request['images'], 'units', 'unit_image');
+        }
+        $featureIds = $request['features'] ?? [];
+        unset($request['features']);
+
+        if (!empty($featureIds)) {
+            $data->features()->sync($featureIds);
         }
 
-        return $unit;
+        return $data;
     }
 
     public function update(array $request, int $id)
     {
         $data = $this->edit($this->model, $request, $id);
+
         if (isset($request['address'])) {
             $addressData = $request['address'];
             $data->address()->update($addressData);
@@ -73,6 +84,10 @@ class UnitService
 
         if (isset($request['images'])) {
             $this->updateGroupMedia($data, $request['images'], 'units', 'unit_image');
+        }
+        if (isset($request['features'])) {
+            $featureIds = $request['features'];
+            $data->features()->sync($featureIds);
         }
         return $data;
     }

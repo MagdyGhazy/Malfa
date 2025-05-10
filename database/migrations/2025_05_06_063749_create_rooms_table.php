@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('description_ar')->nullable();
             $table->text('rules_en')->nullable();
             $table->text('rules_ar')->nullable();
-            $table->tinyInteger('is_available')->default(1);
+            $table->boolean('is_available')->default(1);
             $table->timestamps();
         });
     }

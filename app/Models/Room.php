@@ -39,6 +39,9 @@ class Room extends Model
     {
         static::deleting(function ($model) {
             $model->deleteMedia($model);
+            if ($model->features) {
+                $model->features()->detach();
+            }
         });
     }
     public function getRoomTypeDescriptionAttribute()
@@ -56,5 +59,9 @@ class Room extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'model');
+    }
+    public function features()
+    {
+        return $this->morphToMany(Feature::class, 'model', 'featureables');
     }
 }

@@ -129,6 +129,6 @@ Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
         Route::post('/', 'store')->middleware('permission:create rooms');
         Route::put('/{id}', 'update')->middleware('permission:edit rooms');
         Route::delete('/{id}', 'destroy')->middleware('permission:delete rooms');
-        Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
+        Route::post('/is_available/{id}','toggleAvailable')->middleware('permission:edit rooms');
     });
 });
