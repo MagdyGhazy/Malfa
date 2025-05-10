@@ -18,9 +18,8 @@ class Feature extends Model
         'type'
     ];
 
-    /**
-     * @var string[]
-     */
+    protected $appends = ['translated_name'];
+
     protected $casts = [
         'type' => 'array',
     ];
