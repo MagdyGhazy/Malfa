@@ -37,5 +37,5 @@ return [
     'studio'        => 'studio',
     'family'        => 'family',
     'rooms'         => 'rooms',
-
+    'reviews'       => 'Reviews',
 ];

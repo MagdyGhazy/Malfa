@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
@@ -66,5 +67,10 @@ class Activity extends Model
     public function features()
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
+    }
+
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
     }
 }
