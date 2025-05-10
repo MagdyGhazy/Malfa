@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Services\Unit;
+namespace App\Http\Services\Restaurant;
 
 use App\Http\Enums\StatusEnum;
-use App\Http\Services\Address\AddressService;
 use App\Http\Traits\AttachmentTrait;
 use App\Http\Traits\RepositoryTrait;
-use App\Models\Unit;
+use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Builder;
 
-class UnitService
+class RestaurantService
 {
-    use RepositoryTrait, AttachmentTrait;
+    use RepositoryTrait,AttachmentTrait;
 
     protected $model;
 
     public function __construct()
     {
-        $this->model = new Unit();
+        $this->model = new Restaurant();
     }
 
     public function index()
@@ -26,8 +25,9 @@ class UnitService
         $perPage = request()->get('limit', 10);
 
         $parameters = [
-            'select' => ['id', 'name', 'description_en', 'description_ar', 'status', 'type', 'rating', 'available_rooms', 'user_id'],
+            'select' => ['id', 'user_id', 'name', 'description_en', 'description_ar', 'rating', 'opening_time', 'closing_time', 'available_tables'],
             'relations' => ['user:id,name', 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',],
+
         ];
 
         $query = $this->query($this->model, $parameters);
@@ -42,15 +42,14 @@ class UnitService
     public function show(int $id)
     {
         $parameters = [
-            'select' => ['id', 'name', 'description_en', 'description_ar', 'type', 'rating', 'available_rooms', 'user_id', 'status'],
-            'relations' => ['user:id,name',
+            'select' => ['id', 'user_id', 'name', 'description_en', 'description_ar', 'rating', 'opening_time', 'closing_time', 'available_tables'],
+            'relations' => [
+                'user:id,name',
                 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',
-                'media:id,name,path,model_id,model_type' ,
-                'rooms:id,unit_id,room_type,price_per_night,capacity,description_en,description_ar,rules_en,rules_ar,is_available',
+                'media:id,name,path,model_id,model_type',
                 'features:id,name_en,name_ar',
-                'reviews:id,user_id,model_id,model_type,rate,message',
-                'reviews.user:id,name',
             ],
+
         ];
 
         return $this->getOne($this->model, $id, $parameters);
@@ -63,7 +62,7 @@ class UnitService
         $data = $this->create($this->model, $request);
         $data->address()->create($addressData);
         if (isset($request['images'])) {
-            $this->addGroupMedia($data, $request['images'], 'units', 'unit_image');
+            $this->addGroupMedia($data, $request['images'], 'restaurants', 'restaurant_image');
         }
         $featureIds = $request['features'] ?? [];
         unset($request['features']);
@@ -71,21 +70,21 @@ class UnitService
         if (!empty($featureIds)) {
             $data->features()->sync($featureIds);
         }
-
         return $data;
+
     }
 
     public function update(array $request, int $id)
     {
-        $data = $this->edit($this->model, $request, $id);
 
+        $data= $this->edit($this->model, $request, $id);
         if (isset($request['address'])) {
             $addressData = $request['address'];
             $data->address()->update($addressData);
         }
 
         if (isset($request['images'])) {
-            $this->updateGroupMedia($data, $request['images'], 'units', 'unit_image');
+            $this->updateGroupMedia($data, $request['images'], 'restaurants', 'restaurant_image');
         }
         if (isset($request['features'])) {
             $featureIds = $request['features'];
@@ -97,7 +96,6 @@ class UnitService
     public function destroy(int $id)
     {
         return $this->delete($this->model, $id);
-
     }
 
     protected function filter(Builder $query, $search)
@@ -109,7 +107,6 @@ class UnitService
             $q->orWhere('name', 'LIKE', "%{$search}%");
         });
     }
-
     public  function toggleStatus(int $id)
     {
         $parameters = [
@@ -124,5 +121,4 @@ class UnitService
             : StatusEnum::ACTIVE->value;
         return $this->edit($this->model,['status' => $newStatus], $id);
     }
-
 }

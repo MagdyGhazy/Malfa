@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Unit;
+namespace App\Http\Requests\Restaurant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUnitRequest extends FormRequest
+class UpdateRestaurantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,25 +22,25 @@ class StoreUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'                 => 'required|exists:users,id',
-            'name'                    => 'required|string|max:255',
+            'user_id'                 => 'sometimes|required|exists:users,id',
+            'name'                    => 'sometimes|required|string|max:255',
             'description_en'          => 'nullable|string',
             'description_ar'          => 'nullable|string',
-            'type'                    => 'required|in:1,2,3',
-            'rating'                  => 'required|integer|min:1|max:5',
+            'rating'                  => 'sometimes|required|integer|between:1,5',
+            'opening_time'            => 'sometimes|required|date_format:H:i',
+            'closing_time'            => 'sometimes|required|date_format:H:i|after:opening_time',
             'status'                  => 'required|in:1,2',
-            'available_rooms'         => 'required|array',
-            'address.address_line_en' => 'required|string|max:255',
-            'address.address_line_ar' => 'required|string|max:255',
-            'address.city_id'         => 'required|exists:cities,id',
-            'address.lat'             => 'required|numeric|between:-90,90',
-            'address.long'            => 'required|numeric|between:-180,180',
+            'available_tables'        => 'nullable|array',
+            'address.address_line_en' => 'sometimes|required|string|max:255',
+            'address.address_line_ar' => 'sometimes|required|string|max:255',
+            'address.city_id'         => 'sometimes|required|exists:cities,id',
+            'address.lat'             => 'sometimes|required|numeric|between:-90,90',
+            'address.long'            => 'sometimes|required|numeric|between:-180,180',
             'address.zip_code'        => 'nullable|string|max:20',
             'images'                  => 'nullable|array',
             'images.*'                => 'image|mimes:jpeg,png,jpg,gif,webp|max:1042',
             'features'                => 'nullable|array',
             'features.*'              => 'exists:features,id',
-
         ];
     }
 }

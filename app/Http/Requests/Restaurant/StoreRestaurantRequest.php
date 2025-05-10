@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Unit;
+namespace App\Http\Requests\Restaurant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUnitRequest extends FormRequest
+class StoreRestaurantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,15 @@ class StoreUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'                 => 'required|exists:users,id',
-            'name'                    => 'required|string|max:255',
-            'description_en'          => 'nullable|string',
-            'description_ar'          => 'nullable|string',
-            'type'                    => 'required|in:1,2,3',
-            'rating'                  => 'required|integer|min:1|max:5',
+            'user_id'                 => 'required', 'exists:users,id',
+            'name'                    => 'required', 'string', 'max:255',
+            'description_en'          => 'nullable', 'string',
+            'description_ar'          => 'nullable', 'string',
+            'rating'                  => 'required', 'integer', 'between:1,5',
+            'opening_time'            => 'required', 'date_format:H:i',
+            'closing_time'            => 'required', 'date_format:H:i', 'after:opening_time',
             'status'                  => 'required|in:1,2',
-            'available_rooms'         => 'required|array',
+            'available_tables'        => 'nullable', 'array',
             'address.address_line_en' => 'required|string|max:255',
             'address.address_line_ar' => 'required|string|max:255',
             'address.city_id'         => 'required|exists:cities,id',
@@ -40,7 +41,6 @@ class StoreUnitRequest extends FormRequest
             'images.*'                => 'image|mimes:jpeg,png,jpg,gif,webp|max:1042',
             'features'                => 'nullable|array',
             'features.*'              => 'exists:features,id',
-
         ];
     }
 }

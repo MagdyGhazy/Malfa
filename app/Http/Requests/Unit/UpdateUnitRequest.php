@@ -28,7 +28,7 @@ class UpdateUnitRequest extends FormRequest
             'description_ar'          => 'nullable|string',
             'type'                    => 'nullable|in:1,2,3',
             'rating'                  => 'nullable|integer|min:1|max:5',
-            'status'                  => 'nullable|in:0,1',
+            'status'                  => 'nullable|in:1,2',
             'available_rooms'         => 'nullable|array',
             'address.address_line_en' => 'nullable|string|max:255',
             'address.address_line_ar' => 'nullable|string|max:255',
