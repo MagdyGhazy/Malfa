@@ -116,6 +116,8 @@ Route::group(['prefix' => 'unit', 'middleware' => 'auth:sanctum'], function () {
         Route::post('/', 'store')->middleware('permission:create units');
         Route::put('/{id}', 'update')->middleware('permission:edit units');
         Route::delete('/{id}', 'destroy')->middleware('permission:delete units');
+        Route::post('/is_active/{id}','toggleStatus')->middleware('permission:edit units');
+
     });
 });
 
@@ -143,3 +145,18 @@ Route::group(['prefix' => 'room', 'middleware' => 'auth:sanctum'], function () {
         Route::post('/is_available/{id}','toggleStatus')->middleware('permission:edit rooms');
     });
 });
+
+
+
+     /** ===========| Restaurant |============================| 2025-05-10 |================= **/
+     Route::group(['prefix' => 'restaurant', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\Restaurant\RestaurantController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list restaurants');
+             Route::get('/{id}', 'show')->middleware('permission:show restaurants');
+             Route::post('/', 'store')->middleware('permission:create restaurants');
+             Route::put('/{id}', 'update')->middleware('permission:edit restaurants');
+             Route::delete('/{id}', 'destroy')->middleware('permission:delete restaurants');
+             Route::post('/is_active/{id}','toggleStatus')->middleware('permission:edit restaurants');
+
+         });
+     });
