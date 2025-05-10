@@ -64,6 +64,7 @@ class Room extends Model
     public function features()
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
+    }
 
     public function reviews(): MorphMany
     {

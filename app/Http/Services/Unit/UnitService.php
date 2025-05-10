@@ -48,7 +48,10 @@ class UnitService
                 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',
                 'media:id,name,path,model_id,model_type' ,
                 'rooms:id,unit_id,room_type,price_per_night,capacity,description_en,description_ar,rules_en,rules_ar,is_available',
-                'features:id,name_en,name_ar'],
+                'features:id,name_en,name_ar',
+                'reviews:id,user_id,model_id,model_type,rate,message',
+                'reviews.user:id,name',
+            ],
         ];
 
         return $this->getOne($this->model, $id, $parameters);
