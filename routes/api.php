@@ -46,17 +46,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     });
 });
 
-/** ===========| User |============================| 2025-04-25 |================= **/
-Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
-    Route::controller(\App\Http\Controllers\Api\User\UserController::class)->group(function () {
-        Route::get('/', 'index')->middleware('permission:list users');
-        Route::get('/{id}', 'show')->middleware('permission:show users');
-        Route::post('/', 'store')->middleware('permission:create users');
-        Route::put('/{id}', 'update')->middleware('permission:edit users');
-        Route::delete('/{id}', 'destroy')->middleware('permission:delete users');
-    });
-});
-
 
 /** ===========| Address |============================| 2025-05-03 |================= **/
 Route::group(['prefix' => 'address', 'middleware' => 'auth:sanctum'], function () {
