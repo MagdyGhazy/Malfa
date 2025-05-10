@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Api\Room;
+namespace App\Http\Controllers\Api\RestaurantTable;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Room\StoreRoomRequest;
-use App\Http\Requests\Room\UpdateRoomRequest;
-use App\Http\Services\Room\RoomService;
+use App\Http\Requests\RestaurantTable\StoreRestaurantTableRequest;
+use App\Http\Requests\RestaurantTable\UpdateRestaurantTableRequest;
+use App\Http\Services\RestaurantTable\RestaurantTableService;
 use App\Http\Traits\ResponseTrait;
 
 
-class RoomController extends Controller
+class RestaurantTableController extends Controller
 {
     use ResponseTrait;
 
     protected $service;
     protected string $key;
 
-    public function __construct(RoomService $service)
+    public function __construct(RestaurantTableService $service)
     {
         $this->service = $service;
-        $this->key = 'Room';
+        $this->key = 'RestaurantTable';
     }
 
 
@@ -37,18 +37,19 @@ class RoomController extends Controller
     }
 
 
-    public function store(StoreRoomRequest $request)
+    public function store(StoreRestaurantTableRequest $request)
     {
         $data = $this->service->store($request->validated());
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' created successfully') : $this->error(null, 404, 'Cannot create ' . $this->key, $data['error']);
     }
 
 
-    public function update(UpdateRoomRequest $request, $id)
+    public function update(UpdateRestaurantTableRequest $request, $id)
     {
        $data = $this->service->update($request->validated(), $id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' updated successfully') : $this->error(null, 404, 'Cannot update ' . $this->key, $data['error']);
     }
+
 
     public function destroy($id)
     {

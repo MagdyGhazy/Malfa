@@ -69,9 +69,9 @@ class Restaurant extends Model
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }
 
-//    public function tables()
-//    {
-//        return $this->hasMany(Tab::class);
-//    }
+    public function tables()
+    {
+        return $this->hasMany(RestaurantTable::class);
+    }
 
 }
