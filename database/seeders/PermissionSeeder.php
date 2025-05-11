@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
             'rooms'              => ['list', 'show', 'create', 'edit', 'delete'],
             'reviews'            => ['list', 'show', 'create', 'edit', 'delete'],
             'restaurants'        => ['list', 'show', 'create', 'edit', 'delete'],
-            'restaurant_tables'  => ['list', 'show', 'create', 'edit', 'delete'],
+            'restaurant_tables'  => ['create', 'edit', 'delete'],
         ];
 
         foreach ($permissions as $module => $actions) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Restaurant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Restaurant\StoreRestaurantRequest;
 use App\Http\Requests\Restaurant\UpdateRestaurantRequest;
+use App\Http\Requests\RestaurantTable\StoreRestaurantTableRequest;
+use App\Http\Requests\RestaurantTable\UpdateRestaurantTableRequest;
 use App\Http\Services\Restaurant\RestaurantService;
 use App\Http\Traits\ResponseTrait;
 
@@ -60,5 +62,29 @@ class RestaurantController extends Controller
     {
         $data = $this->service->toggleStatus($id);
         return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Status Changed successfully') : $this->error(null, 404, 'Cannot Change Status ' . $this->key, $data['error']);
+    }
+    public function storeTable(StoreRestaurantTableRequest $request)
+    {
+        $data = $this->service->storeTable($request->validated());
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' created successfully') : $this->error(null, 404, 'Cannot create ' . $this->key, $data['error']);
+    }
+
+
+    public function updateTable(UpdateRestaurantTableRequest $request, $id)
+    {
+        $data = $this->service->updateTable($request->validated(), $id);
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' updated successfully') : $this->error(null, 404, 'Cannot update ' . $this->key, $data['error']);
+    }
+
+
+    public function destroyTable($id)
+    {
+        $data = $this->service->destroyTable($id);
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' deleted successfully') : $this->error(null, 404, 'Cannot delete ' . $this->key, $data['error']);
+    }
+    public function toggleAvailable($id)
+    {
+        $data = $this->service->toggleAvailable($id);
+        return !isset($data['error']) ? $this->success($data, 201, $this->key . ' Available Changed successfully') : $this->error(null, 404, 'Cannot Change Available ' . $this->key, $data['error']);
     }
 }
