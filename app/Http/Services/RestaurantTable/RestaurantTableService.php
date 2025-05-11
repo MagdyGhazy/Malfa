@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Http\Services\RestaurantTable;
+
+use App\Http\Traits\AttachmentTrait;
+use App\Http\Traits\RepositoryTrait;
+use App\Models\RestaurantTable;
+use Illuminate\Database\Eloquent\Builder;
+
+class RestaurantTableService
+{
+    use RepositoryTrait,AttachmentTrait;
+
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = new RestaurantTable();
+    }
+
+    public function index()
+    {
+        $search  = request()->get('search');
+        $perPage = request()->get('limit', 10);
+
+        $parameters = [
+            'select'    => ['id','restaurant_id','capacity','description_en','description_ar','is_available'],
+            'relations' => [
+                'restaurant:id,name,description_en,description_ar,rating,opening_time,closing_time,available_tables,status'
+            ],
+        ];
+
+        $query = $this->query($this->model, $parameters);
+
+        if ($search) {
+            $query = $this->filter($query, $search);
+        }
+
+        return $query->paginate($perPage);
+    }
+
+    public function show(int $id)
+    {
+        $parameters = [
+            'select'    => ['id','restaurant_id','capacity','description_en','description_ar','is_available'],
+            'relations' => [
+                'restaurant:id,name,description_en,description_ar,rating,opening_time,closing_time,available_tables,status',
+                'media:id,name,path,model_id,model_type',
+                'features:id,name_en,name_ar',
+
+            ],
+
+        ];
+
+        return $this->getOne($this->model, $id, $parameters);
+    }
+
+    public function store(array $request)
+    {
+
+        $data = $this->create($this->model, $request);
+        if (isset($request['images'])) {
+            $this->addGroupMedia($data, $request['images'], 'restaurant_tables', 'restaurant_table_image');
+        }
+        if (isset($request['features'])) {
+            $featureIds = $request['features'];
+            $data->features()->sync($featureIds);
+        }
+        return $data;
+
+    }
+
+    public function update(array $request, int $id)
+    {
+        $data = $this->edit($this->model, $request, $id);
+        if (isset($request['images'])) {
+            $this->updateGroupMedia($data, $request['images'], 'restaurant_tables', 'restaurant_table_image');
+        }
+        if (isset($request['features'])) {
+            $featureIds = $request['features'];
+            $data->features()->sync($featureIds);
+        }
+        return $data;
+    }
+
+    public function destroy(int $id)
+    {
+        return $this->delete($this->model, $id);
+    }
+
+    protected function filter(Builder $query, $search)
+    {
+        return $query->where(function (Builder $q) use ($search) {
+            $q->where('capacity', 'LIKE', "%{$search}%");
+            $q->orWhere('description_en', 'LIKE', "%{$search}%");
+            $q->orWhere('description_ar', 'LIKE', "%{$search}%");
+
+        });
+    }
+    public function toggleAvailable(int $id)
+    {
+        $parameters = [
+            'select' => ['id', 'is_available'],
+            'where' => [
+                ['id', '=', $id],
+            ]
+        ];
+        $data = $this->query($this->model, $parameters)->first();
+        $newStatus = $data->is_available == 1 ? 2 : 1;
+        return $this->edit($this->model, ['is_available'=>$newStatus], $id);
+    }
+
+
+}

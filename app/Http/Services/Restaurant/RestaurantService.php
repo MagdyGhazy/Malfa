@@ -42,12 +42,13 @@ class RestaurantService
     public function show(int $id)
     {
         $parameters = [
-            'select' => ['id', 'user_id', 'name', 'description_en', 'description_ar', 'rating', 'opening_time', 'closing_time', 'available_tables'],
+            'select' => ['id', 'user_id', 'name', 'description_en', 'description_ar', 'rating', 'opening_time', 'closing_time', 'available_tables','status'],
             'relations' => [
                 'user:id,name',
                 'address:id,model_id,model_type,address_line_en,address_line_ar,city_id,lat,long,zip_code',
                 'media:id,name,path,model_id,model_type',
                 'features:id,name_en,name_ar',
+                'tables:id,restaurant_id,capacity,description_en,description_ar,is_available',
             ],
 
         ];

@@ -43,7 +43,11 @@ class RoomService
         {
             $parameters = [
                 'select' => ['id', 'unit_id', 'room_type', 'price_per_night', 'capacity', 'description_en', 'description_ar', 'rules_en', 'rules_ar', 'is_available'],
-                'relations' => ['media:id,name,path,model_id,model_type', 'unit:id,name,description_en,description_ar,status,type','features:id,name_en,name_ar'],
+                'relations' => [
+                    'media:id,name,path,model_id,model_type',
+                    'unit:id,name,description_en,description_ar,status,type',
+                    'features:id,name_en,name_ar'
+                ],
             ];
             return $this->getOne($this->model, $id, $parameters);
         }
@@ -52,7 +56,7 @@ class RoomService
     {
         $data = $this->create($this->model, $request);
         if (isset($request['images'])) {
-            $this->addGroupMedia($data, $request['images'], 'units', 'room_image');
+            $this->addGroupMedia($data, $request['images'], 'rooms', 'room_image');
         }
         if (isset($request['features'])) {
             $featureIds = $request['features'];
@@ -66,7 +70,7 @@ class RoomService
     {
         $data = $this->edit($this->model, $request, $id);
         if (isset($request['images'])) {
-            $this->updateGroupMedia($data, $request['images'], 'units', 'room_image');
+            $this->updateGroupMedia($data, $request['images'], 'rooms', 'room_image');
         }
         if (isset($request['features'])) {
             $featureIds = $request['features'];

@@ -160,3 +160,18 @@ use Illuminate\Support\Facades\Route;
 
          });
      });
+
+
+
+     /** ===========| RestaurantTable |============================| 2025-05-10 |================= **/
+     Route::group(['prefix' => 'restaurant_tables', 'middleware' => 'auth:sanctum'], function () {
+         Route::controller(\App\Http\Controllers\Api\RestaurantTable\RestaurantTableController::class)->group(function () {
+             Route::get('/', 'index')->middleware('permission:list restaurant_tables');
+             Route::get('/{id}', 'show')->middleware('permission:show restaurant_tables');
+             Route::post('/', 'store')->middleware('permission:create restaurant_tables');
+             Route::put('/{id}', 'update')->middleware('permission:edit restaurant_tables');
+             Route::delete('/{id}', 'destroy')->middleware('permission:delete restaurant_tables');
+             Route::post('/is_available/{id}','toggleAvailable')->middleware('permission:edit restaurant_tables');
+
+         });
+     });
