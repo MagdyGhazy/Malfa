@@ -25,7 +25,7 @@ class Media extends Model
         if ($env == 'local') {
             return $this->path ? url($this->path) : null;
         }else{
-            return $this->path ? url('public/storage/' . $this->path) : null;
+            return $this->path ? url('storage/' . $this->path) : null;
         }
     }
 
