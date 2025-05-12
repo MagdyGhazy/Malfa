@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Enums\ModelType;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory, AttachmentTrait;
+
+    protected $casts = [
+        'model_type' => 'string',
+    ];
 
     protected $fillable = [
         'user_id',
@@ -20,12 +26,27 @@ class Review extends Model
         'message'
     ];
 
-    protected static function booted()
+    public function setModelTypeAttribute($value)
     {
-        static::deleting(function ($model) {
-            $model->deleteMedia($model);
-        });
+        $map = [
+            'user' => \App\Models\User::class,
+            'unit' => \App\Models\Unit::class,
+            'room' => \App\Models\Room::class,
+        ];
+
+        $this->attributes['model_type'] = $map[strtolower($value)] ?? $value;
     }
+
+    public function getModelTypeAttribute($value)
+    {
+        $reverseMap = [
+            \App\Models\User::class => 'user',
+            \App\Models\Unit::class => 'unit',
+            \App\Models\Room::class => 'room',
+        ];
+        return $reverseMap[$value] ?? $value;
+    }
+
 
     public function user(): BelongsTo
     {
@@ -37,7 +58,7 @@ class Review extends Model
         return $this->morphTo();
     }
 
-    public function media()
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
