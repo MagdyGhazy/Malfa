@@ -6,6 +6,7 @@ use App\Http\Enums\StatusEnum;
 use App\Http\Traits\AttachmentTrait;
 use App\Http\Traits\RepositoryTrait;
 use App\Models\Restaurant;
+use App\Models\RestaurantTable;
 use Illuminate\Database\Eloquent\Builder;
 
 class RestaurantService
@@ -13,10 +14,12 @@ class RestaurantService
     use RepositoryTrait,AttachmentTrait;
 
     protected $model;
+    protected $model2;
 
     public function __construct()
     {
         $this->model = new Restaurant();
+        $this->model2= new RestaurantTable();
     }
 
     public function index()
@@ -122,4 +125,48 @@ class RestaurantService
             : StatusEnum::ACTIVE->value;
         return $this->edit($this->model,['status' => $newStatus], $id);
     }
+    public function storeTable(array $request)
+    {
+
+        $data = $this->create($this->model2, $request);
+        if (isset($request['images'])) {
+            $this->addGroupMedia($data, $request['images'], 'restaurant_tables', 'restaurant_table_image');
+        }
+        if (isset($request['features'])) {
+            $featureIds = $request['features'];
+            $data->features()->sync($featureIds);
+        }
+        return $data;
+
+    }
+    public function updateTable(array $request, int $id)
+    {
+        $data = $this->edit($this->model2, $request, $id);
+        if (isset($request['images'])) {
+            $this->updateGroupMedia($data, $request['images'], 'restaurant_tables', 'restaurant_table_image');
+        }
+        if (isset($request['features'])) {
+            $featureIds = $request['features'];
+            $data->features()->sync($featureIds);
+        }
+        return $data;
+    }
+    public function destroyTable(int $id)
+    {
+        return $this->delete($this->model2, $id);
+    }
+    public function toggleAvailable(int $id)
+    {
+        $parameters = [
+            'select' => ['id', 'is_available'],
+            'where' => [
+                ['id', '=', $id],
+            ]
+        ];
+        $data = $this->query($this->model2, $parameters)->first();
+        $newStatus = $data->is_available == 1 ? 2 : 1;
+        return $this->edit($this->model2, ['is_available'=>$newStatus], $id);
+    }
+
+
 }
