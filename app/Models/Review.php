@@ -29,7 +29,6 @@ class Review extends Model
     public function setModelTypeAttribute($value)
     {
         $map = [
-            'user' => \App\Models\User::class,
             'unit' => \App\Models\Unit::class,
             'room' => \App\Models\Room::class,
         ];
@@ -40,7 +39,6 @@ class Review extends Model
     public function getModelTypeAttribute($value)
     {
         $reverseMap = [
-            \App\Models\User::class => 'user',
             \App\Models\Unit::class => 'unit',
             \App\Models\Room::class => 'room',
         ];
@@ -50,7 +48,7 @@ class Review extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function model(): MorphTo

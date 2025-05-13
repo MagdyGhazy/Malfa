@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\App;
 
 class Activity extends Model
@@ -37,22 +40,22 @@ class Activity extends Model
         return $this->description_ar ?? '';
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function media()
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
 
-    public function address()
+    public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'model');
     }
 
-    public function features()
+    public function features(): MorphToMany
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }

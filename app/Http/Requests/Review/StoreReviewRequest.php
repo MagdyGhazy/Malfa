@@ -24,7 +24,7 @@ class StoreReviewRequest extends FormRequest
         return [
             'user_id'    => 'required|exists:users,id',
             'model_id'   => 'required|integer',
-            'model_type' => 'required|string',
+            'model_type' => 'required|string|in:unit,room',
             'rate'       => 'required|integer|min:1|max:5',
             'message'    => 'nullable|string|max:1000',
             'images'     => 'nullable|array',

@@ -6,7 +6,9 @@ namespace App\Models;
 use App\Http\Enums\UserTypeEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -67,7 +69,7 @@ class User extends Authenticatable
     }
 
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_roles');
     }
@@ -102,12 +104,13 @@ class User extends Authenticatable
     {
         return $this->morphMany(\App\Models\Media::class, 'model');
     }
-    public function address()
+
+    public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'model');
     }
 
-    public function activities()
+    public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
     }
