@@ -88,7 +88,7 @@ class RoleService
 
         $data = $query->get()->groupBy(function ($permission) {
             $parts = explode(' ', $permission->name);
-            return $parts[1] ?? null;
+            return __('translate.' . $parts[1]) ?? null;
         });
 
         return $data ?? null;
