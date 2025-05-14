@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/', 'index')->middleware('permission:list users');
             Route::get('/{id}', 'show')->middleware('permission:show users');
             Route::post('/', 'store')->middleware('permission:create users');
-            Route::put('/{id}', 'update')->middleware('permission:edit users');
+            Route::post('/{id}', 'update')->middleware('permission:edit users');
             Route::delete('/{id}', 'destroy')->middleware('permission:delete users');
         });
     });
