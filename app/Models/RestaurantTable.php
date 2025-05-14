@@ -6,6 +6,9 @@ use App\Http\Enums\AvailableEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\App;
 
 class RestaurantTable extends Model
@@ -19,7 +22,8 @@ class RestaurantTable extends Model
         'description_ar',
         'is_available',
     ];
-    protected $appends = ['available_description','translated_description'];
+    protected $appends = ['available_description', 'translated_description'];
+
     protected static function booted()
     {
         static::deleting(function ($model) {
@@ -34,19 +38,23 @@ class RestaurantTable extends Model
     {
         return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
     }
+
     public function getAvailableDescriptionAttribute()
     {
-        return  AvailableEnum::getDescription($this->is_available);
+        return AvailableEnum::getDescription($this->is_available);
     }
-    public function restaurant()
+
+    public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
     }
-    public function media()
+
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
-    public function features()
+
+    public function features(): MorphToMany
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }

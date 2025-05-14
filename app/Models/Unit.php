@@ -6,8 +6,12 @@ use App\Http\Enums\StatusEnum;
 use App\Http\Enums\UnitTypeEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\App;
 
 class Unit extends Model
@@ -58,27 +62,27 @@ class Unit extends Model
     }
 
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function address()
+    public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'model');
     }
 
-    public function media()
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
 
-    public function features()
+    public function features(): MorphToMany
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }
 
-    public function rooms()
+    public function rooms(): HasMany
     {
         return $this->hasMany(Room::class);
     }

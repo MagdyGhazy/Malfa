@@ -6,6 +6,7 @@ use App\Http\Enums\AvailableEnum;
 use App\Http\Enums\RoomTypeEnum;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
@@ -53,15 +54,15 @@ class Room extends Model
     {
         return  AvailableEnum::getDescription($this->is_available);
     }
-    public function unit()
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
-    public function media()
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
-    public function features()
+    public function features():
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }

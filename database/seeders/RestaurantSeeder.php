@@ -15,7 +15,7 @@ class RestaurantSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <=3; $i++) {
-            Restaurant::create([
+            $restaurant =Restaurant::create([
                 'user_id' => 1,
                 'name' => "Restaurant $i",
                 'description_en' => "This is a description for Restaurant $i",
@@ -26,6 +26,12 @@ class RestaurantSeeder extends Seeder
                 'available_tables' => [2, 4, 6],
                 'status' => 1,
             ]);
+            $restaurant->tables()->create([
+                'capacity'        => rand(2, 10),
+                'description_en'  => 'Table description ' . $i,
+                'description_ar'  => 'وصف الطاولة ' . $i,
+            ]);
+
         }
     }
 }
