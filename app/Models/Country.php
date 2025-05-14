@@ -11,10 +11,13 @@ class Country extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'native', 'iso_code'];
+
+
     public function states(): HasMany
     {
         return $this->hasMany(State::class);
     }
+
     public function cities(): HasMany
     {
         return $this->hasMany(City::class);

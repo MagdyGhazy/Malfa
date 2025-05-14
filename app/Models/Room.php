@@ -28,10 +28,14 @@ class Room extends Model
         ];
 
     protected $appends = ['available_description', 'room_type_description','translated_description','translated_rules'];
+
+
     public function getTranslatedDescriptionAttribute(): string
     {
         return App::getLocale() === 'en' ? $this->description_en : $this->description_ar;
     }
+
+
     public function getTranslatedRulesAttribute(): string
     {
         return App::getLocale() === 'en' ? $this->rules_en : $this->rules_ar;
@@ -46,23 +50,29 @@ class Room extends Model
             }
         });
     }
+
+
     public function getRoomTypeDescriptionAttribute()
     {
         return RoomTypeEnum::getDescription($this->room_type);
     }
+
     public function getAvailableDescriptionAttribute()
     {
         return  AvailableEnum::getDescription($this->is_available);
     }
+
     public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
+
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'model');
     }
-    public function features():
+
+    public function features()
     {
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }

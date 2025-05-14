@@ -142,7 +142,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/', 'index')->middleware('permission:list reviews');
             Route::get('/{id}', 'show')->middleware('permission:show reviews');
             Route::post('/', 'store')->middleware('permission:create reviews');
-            Route::put('/{id}', 'update')->middleware('permission:edit reviews');
+            Route::post('/{id}', 'update')->middleware('permission:edit reviews');
             Route::delete('/{id}', 'destroy')->middleware('permission:delete reviews');
         });
     });
