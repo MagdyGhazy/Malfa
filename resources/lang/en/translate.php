@@ -40,5 +40,5 @@ return [
     'reviews'                => 'Reviews',
     'restaurants'            => 'restaurants',
     'restaurant_tables'      => 'restaurant tables',
-    'activity'               => 'Activity'
+    'activities'             => 'Activities'
 ];

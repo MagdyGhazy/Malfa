@@ -41,7 +41,7 @@ return [
     'reviews'             => 'مراجعات',
     'restaurants'         => 'المطاعم',
     'restaurant_tables'   => 'طاولات المطعم',
-    'Activity'            => 'فعالية',
+    'activities'          => 'فعاليات',
 ];
 
 
