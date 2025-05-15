@@ -39,6 +39,6 @@ return [
     'rooms'                  => 'rooms',
     'reviews'                => 'Reviews',
     'restaurants'            => 'restaurants',
-    'restaurant_tables'      => 'restaurant tables',
+    'restaurant tables'      => 'restaurant tables',
     'activities'             => 'Activities'
 ];
