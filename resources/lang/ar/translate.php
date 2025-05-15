@@ -40,7 +40,7 @@ return [
     'rooms'               => 'الغرف',
     'reviews'             => 'مراجعات',
     'restaurants'         => 'المطاعم',
-    'restaurant_tables'   => 'طاولات المطعم',
+    'restaurant tables'   => 'طاولات المطعم',
     'activities'          => 'فعاليات',
 ];
 

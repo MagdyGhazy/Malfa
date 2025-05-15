@@ -157,10 +157,10 @@ use Illuminate\Support\Facades\Route;
              Route::put('/{id}', 'update')->middleware('permission:edit restaurants');
              Route::delete('/{id}', 'destroy')->middleware('permission:delete restaurants');
              Route::post('/is_active/{id}','toggleStatus')->middleware('permission:edit restaurants');
-             Route::post('/tables', 'storeTable')->middleware('permission:create restaurant_tables');
-             Route::put('/tables/{id}', 'updateTable')->middleware('permission:edit restaurant_tables');
-             Route::delete('/tables/{id}', 'destroyTable')->middleware('permission:delete restaurant_tables');
-             Route::post('/is_available/{id}','toggleAvailable')->middleware('permission:edit restaurant_tables');
+             Route::post('/tables', 'storeTable')->middleware('permission:create restaurant tables');
+             Route::put('/tables/{id}', 'updateTable')->middleware('permission:edit restaurant tables');
+             Route::delete('/tables/{id}', 'destroyTable')->middleware('permission:delete restaurant tables');
+             Route::post('/is_available/{id}','toggleAvailable')->middleware('permission:edit restaurant tables');
 
          });
      });
