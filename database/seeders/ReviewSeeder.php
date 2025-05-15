@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activity;
+use App\Models\Restaurant;
+use App\Models\RestaurantTable;
 use App\Models\Review;
 
 use App\Models\Room;
@@ -18,15 +21,26 @@ class ReviewSeeder extends Seeder
     public function run(): void
     {
         $user = User::inRandomOrder()->first();
-        $unit = Unit::inRandomOrder()->first();
+        $activity = Activity::inRandomOrder()->first();
+        $restaurant = Restaurant::inRandomOrder()->first();
         $room = Room::inRandomOrder()->first();
+        $table = RestaurantTable::inRandomOrder()->first();
+        $unit = Unit::inRandomOrder()->first();
 
         Review::create([
             'user_id'    => $user->id,
-            'model_id'   => $unit->id,
-            'model_type' => Unit::class,
+            'model_id'   => $activity->id,
+            'model_type' => Activity::class,
             'rate'       => rand(1, 5),
-            'message'    => 'This is a sample review message.',
+            'message'    => 'This is a review for an activity.',
+        ]);
+
+        Review::create([
+            'user_id'    => $user->id,
+            'model_id'   => $restaurant->id,
+            'model_type' => Restaurant::class,
+            'rate'       => rand(1, 5),
+            'message'    => 'This is a review for a restaurant.',
         ]);
 
         Review::create([
@@ -34,15 +48,23 @@ class ReviewSeeder extends Seeder
             'model_id'   => $room->id,
             'model_type' => Room::class,
             'rate'       => rand(1, 5),
-            'message'    => 'This is another sample review message.',
+            'message'    => 'This is a review for a room.',
+        ]);
+
+        Review::create([
+            'user_id'    => $user->id,
+            'model_id'   => $table->id,
+            'model_type' => RestaurantTable::class,
+            'rate'       => rand(1, 5),
+            'message'    => 'This is a review for a table.',
         ]);
 
         Review::create([
             'user_id'    => $user->id,
             'model_id'   => $unit->id,
-            'model_type' => Unit::class,
+            'model_type' => RestaurantTable::class,
             'rate'       => rand(1, 5),
-            'message'    => 'This is another sample review message.',
+            'message'    => 'This is a review for a table.',
         ]);
     }
 }

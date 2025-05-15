@@ -23,7 +23,7 @@ class UpdateReviewRequest extends FormRequest
     {
         return [
             'model_id'   => 'nullable|integer',
-            'model_type' => 'required|string|in:unit,room',
+            'model_type' => 'required|string|in:unit,room,restaurant,activity,table',
             'rate'       => 'nullable|integer|min:1|max:5',
             'message'    => 'nullable|string|max:1000',
             'images'     => 'nullable|array',

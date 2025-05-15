@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Enums\ModelType;
 use App\Http\Traits\AttachmentTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -29,8 +28,11 @@ class Review extends Model
     public function setModelTypeAttribute($value)
     {
         $map = [
-            'unit' => \App\Models\Unit::class,
-            'room' => \App\Models\Room::class,
+            'unit'          => \App\Models\Unit::class,
+            'room'          => \App\Models\Room::class,
+            'restaurant'    => \App\Models\Restaurant::class,
+            'activity'      => \App\Models\Activity::class,
+            'table'         => \App\Models\RestaurantTable::class
         ];
 
         $this->attributes['model_type'] = $map[strtolower($value)] ?? $value;
@@ -39,8 +41,11 @@ class Review extends Model
     public function getModelTypeAttribute($value)
     {
         $reverseMap = [
-            \App\Models\Unit::class => 'unit',
-            \App\Models\Room::class => 'room',
+            \App\Models\Unit::class            => 'unit',
+            \App\Models\Room::class            => 'room',
+            \App\Models\Restaurant::class      => 'restaurant',
+            \App\Models\Activity::class        => 'activity',
+            \App\Models\RestaurantTable::class => 'table'
         ];
         return $reverseMap[$value] ?? $value;
     }

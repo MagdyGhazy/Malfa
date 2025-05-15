@@ -82,4 +82,8 @@ class Restaurant extends Model
         return $this->hasMany(RestaurantTable::class,'restaurant_id');
     }
 
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
+    }
 }

@@ -59,5 +59,8 @@ class RestaurantTable extends Model
         return $this->morphToMany(Feature::class, 'model', 'featureables');
     }
 
-
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'model');
+    }
 }
