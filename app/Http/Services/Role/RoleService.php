@@ -6,6 +6,7 @@ use App\Http\Traits\RepositoryTrait;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class RoleService
 {
@@ -87,8 +88,8 @@ class RoleService
         }
 
         $data = $query->get()->groupBy(function ($permission) {
-            $parts = explode(' ', $permission->name);
-            return __('translate.' . $parts[1]) ?? null;
+            $name = Str::of($permission->name)->after(' ');
+            return __('translate.' . $name) ?? null;
         });
 
         return $data ?? null;
