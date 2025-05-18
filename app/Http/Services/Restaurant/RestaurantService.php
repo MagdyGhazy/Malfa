@@ -183,10 +183,10 @@ class RestaurantService
                 ['id', '=', $id],
             ]
         ];
-        $data = $this->query($this->model2, $parameters)->first();
+        $table = new RestaurantTable();
+        $data = $this->query($table, $parameters)->first();
         $newStatus = $data->is_available == 1 ? 2 : 1;
-        return $this->edit($this->model2, ['is_available'=>$newStatus], $id);
+        return $this->edit($table, ['is_available'=>$newStatus], $id);
     }
-
-
+    
 }
