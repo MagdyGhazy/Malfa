@@ -56,9 +56,9 @@ class AuthService
             return ['error' => 'wrong phone or email'];
         }
 
-        if ($user->email_verified_at == null) {
-            return ['error' => 'you must verify your email'];
-        }
+//        if ($user->email_verified_at == null) {
+//            return ['error' => 'you must verify your email'];
+//        }
 
         if (!Hash::check($request['password'], $user->password)) {
             return ['error' => 'wrong password'];
