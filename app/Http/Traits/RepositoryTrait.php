@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait RepositoryTrait
 {
     private function buildQuery($query, $parameters = [])
@@ -21,6 +23,22 @@ trait RepositoryTrait
                     if (is_array($condition) && count($condition) >= 2) {
                         $query->where(...$condition);
                     }
+                }
+            });
+
+            $query->when(!empty($parameters['search']) && is_array($parameters['search']), function ($query) use ($parameters) {
+                $searchTerm = $parameters['search']['search'];
+                $columns = $parameters['search']['columns'];
+
+                if (method_exists($query, 'whereAny')) {
+                    $query->whereAny($columns, 'LIKE', "%{$searchTerm}%");
+                } else {
+                    // Fallback for older Laravel versions
+                    $query->where(function (Builder $q) use ($searchTerm, $columns) {
+                        foreach ($columns as $column) {
+                            $q->orWhere($column, 'LIKE', "%{$searchTerm}%");
+                        }
+                    });
                 }
             });
 

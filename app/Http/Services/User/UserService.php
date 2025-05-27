@@ -26,13 +26,10 @@ class UserService
         $parameters = [
             'select' => ['id', 'name', 'email', 'phone', 'type'],
             'relations' => ['roles:id,name_en,name_ar','media:id,name,path,model_id,model_type'],
+            'search' => $search ? ['search' => $search , 'columns' => ['name', 'email', 'phone']] : null,
         ];
 
         $query = $this->query($this->model, $parameters);
-
-        if ($search) {
-            $query = $this->filter($query, $search);
-        }
 
         return $query->paginate($perPage);
     }
@@ -85,12 +82,4 @@ class UserService
         return $this->delete($this->model, $id);
     }
 
-    protected function filter(Builder $query, $search)
-    {
-        return $query->where(function (Builder $q) use ($search) {
-            $q->where('name', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhere('phone', 'LIKE', "%{$search}%");
-        });
-    }
 }
